@@ -1,0 +1,63 @@
+import 'package:animku/environments/colors.dart';
+import 'package:animku/environments/dictionary.dart';
+import 'package:animku/ui/current_season_screen.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
+
+class BottomNavBar extends StatefulWidget {
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int currentIndex = 0;
+  List<Widget>_children = [
+    CurrentSeasonScreen(),
+
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[currentIndex],
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: currentIndex,
+        onItemSelected: onTapTapped,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        items: [
+          _customItems(
+            icon: Icon(Icons.ac_unit),
+            title: Dictionary.winter
+          ),
+          _customItems(
+              icon: Icon(FontAwesomeIcons.leaf),
+              title: Dictionary.spring
+          ),
+          _customItems(
+            icon: Icon(Icons.wb_sunny),
+            title: Dictionary.summer
+          ),
+          _customItems(
+            icon: Icon(LineAwesomeIcons.leaf),
+            title: Dictionary.fall
+          )
+        ],
+      ),
+    );
+  }
+  void onTapTapped(index){
+    setState(() {
+      currentIndex = index;
+    });
+  }
+  _customItems({icon,title,active,inactive}){
+    return BottomNavyBarItem(
+      title: Text(title),
+      icon: icon,
+      activeColor: BaseColor.greyPurple,
+      inactiveColor: BaseColor.grey,
+    );
+  }
+}
