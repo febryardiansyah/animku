@@ -1,5 +1,7 @@
+import 'dart:convert';
 
-
+MondayModel mondayModelFromJson(String res) => MondayModel.fromMap(jsonDecode(res));
+TuesdayModel tuesdayModelFromJson(String res) => TuesdayModel.fromMap(jsonDecode(res));
 class MondayModel {
   List<Day>day;
 

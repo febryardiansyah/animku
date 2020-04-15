@@ -1,11 +1,13 @@
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
+import 'package:animku/providers/current_season_provider.dart';
 import 'package:animku/ui/current_season_screen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -16,8 +18,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
   List<Widget>_children = [
     CurrentSeasonScreen(),
-
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<CurrentSeasonProvider>(context,listen: false).getCurrentSeason();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
