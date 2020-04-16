@@ -4,16 +4,33 @@ import 'package:animku/components/season_title.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
 import 'package:animku/environments/my_fonts.dart';
+import 'package:animku/providers/current_season_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class CurrentSeasonScreen extends StatefulWidget {
+  static final ScrollController scrollController = new ScrollController();
+  final title,mylist,mygridview;
+
+  const CurrentSeasonScreen({Key key, this.title, this.mylist, this.mygridview}) : super(key: key);
   @override
   _CurrentSeasonScreenState createState() => _CurrentSeasonScreenState();
 }
 
 class _CurrentSeasonScreenState extends State<CurrentSeasonScreen> {
+
   bool isList = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    CurrentSeasonScreen.scrollController.addListener((){
+      if(CurrentSeasonScreen.scrollController.position.pixels == CurrentSeasonScreen.scrollController.position.maxScrollExtent){
+        Provider.of<CurrentSeasonProvider>(context, listen: false).getWinter();
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,17 +64,20 @@ class _CurrentSeasonScreenState extends State<CurrentSeasonScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SeasonTitle(judul: 'Winter 2020',),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 35),
-              child: isList?MyList():MyGridView(),
-            ),
-          ],
+      body: SingleChildScrollView(
+        controller: CurrentSeasonScreen.scrollController,
+        child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SeasonTitle(judul: widget.title,),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 35),
+                child: isList?widget.mylist:widget.mygridview,
+              ),
+            ],
+          ),
         ),
       ),
     );

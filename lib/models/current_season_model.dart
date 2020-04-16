@@ -7,6 +7,10 @@ class CurrentSeasonModel{
   int seasonYear;
   List<AnimeList> animeList;
 
+  @override
+  String toString() {
+    return 'CurrentSeasonModel{seasonName: $seasonName, seasonYear: $seasonYear, animeList: $animeList}';
+  }
   CurrentSeasonModel({this.seasonName, this.seasonYear, this.animeList});
 
   factory CurrentSeasonModel.fromMap(Map<String, dynamic>json){
@@ -22,7 +26,8 @@ class CurrentSeasonModel{
 class AnimeList{
   String title,imageUrl,synopsis,type,
   airingStart,source;
-  int members,score,episodes;
+  int members,episodes;
+  var score;
   List<GenreList> genreList;
   List<Producers> producers;
 
@@ -35,6 +40,7 @@ class AnimeList{
       imageUrl: json['image_url'],
       synopsis: json['synopsis'],
       type: json['type'],
+      score: json['score'],
       airingStart: json['airing_start'],
       episodes: json['episodes'],
       members: json['members'],
@@ -47,12 +53,19 @@ class AnimeList{
 
 class GenreList{
   String name;
+  String type;
 
-  GenreList({this.name});
+  GenreList({this.name,this.type});
+
+  @override
+  String toString() {
+    return 'GenreList{name: $name, type: $type}';
+  }
 
   factory GenreList.fromMap(Map<String,dynamic>json){
     return GenreList(
       name: json['name'],
+      type: json['type'],
     );
   }
 }

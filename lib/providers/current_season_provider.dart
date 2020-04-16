@@ -5,19 +5,38 @@ import 'package:flutter/material.dart';
 
 class CurrentSeasonProvider extends ChangeNotifier{
   var api = ApiService();
-  CurrentSeasonModel currentSeasonModel;
+  List<CurrentSeasonModel> _winter2020=[];
+  List<CurrentSeasonModel> _spring2020 = [];
 
-  Future<CurrentSeasonModel>getCurrentSeason()async{
-    final response = await api.client.get('${api.baseUrl+EndPointPath.currentSeason}');
+  List<CurrentSeasonModel> get spring2020 => _spring2020;
+
+  List<CurrentSeasonModel> get winter2020 => _winter2020;
+
+  //fetch getWinter2020
+  Future<List<CurrentSeasonModel>>getWinter()async{
+    final response = await api.client.get('${api.baseUrl+EndPointPath.winter2020}');
 
     if(response.statusCode == 200){
       notifyListeners();
       var res = currentSeasonFromJson(response.body);
-      currentSeasonModel = res;
-      print(currentSeasonModel.animeList[0].title);
-      return currentSeasonModel;
+      _winter2020.add(res);
+      return _winter2020;
     }else{
-      return null;
+      throw Exception();
+    }
+  }
+
+  //fetch getSpring2020
+  Future<List<CurrentSeasonModel>>getSpring()async{
+    final response = await api.client.get('${api.baseUrl+EndPointPath.spring2020}');
+
+    if(response.statusCode == 200){
+      notifyListeners();
+      var res = currentSeasonFromJson(response.body);
+      _spring2020.add(res);
+      return _spring2020;
+    }else{
+      throw Exception();
     }
   }
 }
