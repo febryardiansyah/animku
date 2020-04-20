@@ -1,4 +1,10 @@
 class EndPointPath{
+  static List pathList =[
+    EndPointPath.winter2020,
+    EndPointPath.spring2020,
+    EndPointPath.summer2020,
+    EndPointPath.fall2020
+  ];
 
   static String currentSeason = '/season';
   static String winter2020 = '/season/2020/winter';

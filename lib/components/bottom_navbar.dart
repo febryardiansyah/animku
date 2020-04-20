@@ -3,8 +3,8 @@ import 'package:animku/environments/dictionary.dart';
 import 'package:animku/environments/end_point_path.dart';
 import 'package:animku/providers/current_season_provider.dart';
 import 'package:animku/providers/days_provider.dart';
-import 'package:animku/ui/spring_season_screen.dart';
-import 'package:animku/ui/currentSeason/current_season_screen.dart';
+import 'package:animku/ui/currentseason/spring_season_screen.dart';
+import 'package:animku/ui/currentseason/winter_season_screen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +20,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
   List<Widget>_children = [
-    SpringSeasonScreen(),
+    WinterSeasonScreen(),
     SpringSeasonScreen(),
   ];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    Provider.of<CurrentSeasonProvider>(context,listen: false).getWinter();
-    Provider.of<DaysProvider>(context,listen: false).getDays();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

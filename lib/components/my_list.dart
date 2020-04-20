@@ -1,6 +1,7 @@
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/providers/current_season_provider.dart';
+import 'package:animku/ui/detailscreen/details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,12 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class MyList extends StatefulWidget {
-  final image, title, genre, score, eps,itemCount;
-
-  const MyList(
-      {Key key, this.image, this.title, this.genre, this.score, this.eps,this.itemCount})
-      : super(key: key);
-
+  final thisPath;
+  const MyList({Key key, this.thisPath}) : super(key: key);
   @override
   _MyListState createState() => _MyListState();
 }
@@ -24,8 +21,8 @@ class _MyListState extends State<MyList> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    var _getData =
-        Provider.of<CurrentSeasonProvider>(context, listen: false).getWinter();
+    var _getData = Provider.of<CurrentSeasonProvider>(context, listen: false)
+        .getCurrentSeason(widget.thisPath);
     return FutureBuilder(
         future: _getData,
         builder: (context, snapshot) {
@@ -37,32 +34,40 @@ class _MyListState extends State<MyList> {
           return Consumer<CurrentSeasonProvider>(
             builder: (context, data, _) => ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: data.winter2020.length,
+              itemCount: data.currentSeason.length,
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemBuilder: (context, i) {
                 List genLst = new List();
-                data.winter2020[i].animeList[i].genreList.forEach((item) {
+                data.currentSeason[i].animeList[i].genreList.forEach((item) {
                   genLst.add(item.name);
                 });
-                if (i == data.winter2020.length) {
+                if (i == data.currentSeason.length) {
                   return _buildProgress();
                 }
-                return Container(
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        height: 600.h,
-                      ),
-                      _background(
-                        title: data.winter2020[i].animeList[i].title,
-                        genre: genLst,
-                        episodes: data.winter2020[i].animeList[i].episodes,
-                        score: data.winter2020[i].animeList[i].score,
-                      ),
-                      _animePic(
-                          imageUrl: data.winter2020[i].animeList[i].imageUrl),
-                    ],
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context)=>DetailsScreen(title: data.currentSeason[i].animeList[i].title,)
+                    ));
+                  },
+                  child: Container(
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          height: 600.h,
+                        ),
+                        _background(
+                          title: data.currentSeason[i].animeList[i].title,
+                          genre: genLst,
+                          episodes: data.currentSeason[i].animeList[i].episodes,
+                          score: data.currentSeason[i].animeList[i].score,
+                        ),
+                        _animePic(
+                            imageUrl:
+                                data.currentSeason[i].animeList[i].imageUrl),
+                      ],
+                    ),
                   ),
                 );
               },
