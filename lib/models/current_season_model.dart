@@ -53,19 +53,16 @@ class AnimeList{
 
 class GenreList{
   String name;
-  String type;
 
-  GenreList({this.name,this.type});
+  GenreList({this.name});
 
   @override
   String toString() {
-    return 'GenreList{name: $name, type: $type}';
+    return 'GenreList{name: $name,}';
   }
-
   factory GenreList.fromMap(Map<String,dynamic>json){
     return GenreList(
       name: json['name'],
-      type: json['type'],
     );
   }
 }

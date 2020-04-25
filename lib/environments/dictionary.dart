@@ -1,6 +1,11 @@
 class Dictionary{
   //bar
   static String appName = 'Animku';
+  static String winter2020 = 'Winter 2020';
+  static String spring2020 = 'Spring 2020';
+  static String summer2020 = 'Summer 2020';
+  static String fall2020 = 'Fall 2020';
+
   static String winter = 'Winter';
   static String spring = 'Spring';
   static String summer = 'Summer';
