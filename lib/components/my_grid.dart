@@ -1,6 +1,7 @@
 import 'package:animku/components/season_title.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
+import 'package:animku/environments/my_variable.dart';
 import 'package:animku/models/current_season_model.dart';
 import 'package:animku/ui/detailscreen/details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,12 +41,35 @@ class _MyGridState extends State<MyGrid> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemBuilder: (context, i) {
+                      List<String> genList = new List();
+                      List<String> studioList = new List();
+                      widget.animeList[i].genreList.forEach((v) {
+                        genList.add(v.name);
+                      });
+                      widget.animeList[i].producers.forEach((f) {
+                        studioList.add(f.name);
+                      });
                       return ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         child: GestureDetector(
                           onTap: () {
+                            setState(() {
+                              MyVariable.isList = false;
+                            });
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => DetailsScreen(title: widget.animeList[i].title,)
+                              builder: (context) => DetailsScreen(
+                                title: widget.animeList[i].title,
+                                imageUrl: widget.animeList[i].imageUrl,
+                                genre: genList,
+                                episodes: widget.animeList[i].episodes,
+                                score: widget.animeList[i].score,
+                                members: widget.animeList[i].members,
+                                airing: widget.animeList[i].airingStart,
+                                source: widget.animeList[i].source,
+                                studio: studioList,
+                                synopsis: widget.animeList[i].synopsis,
+                                type: widget.animeList[i].type,
+                              )
                             ));
                           },
                           child: Container(

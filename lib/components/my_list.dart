@@ -1,5 +1,6 @@
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
+import 'package:animku/environments/my_variable.dart';
 import 'package:animku/models/current_season_model.dart';
 import 'package:animku/ui/detailscreen/details_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +17,37 @@ class MyList extends StatefulWidget {
 }
 
 class _MyListState extends State<MyList> {
-  ScrollController scrollController = new ScrollController();
-
+  bool showFAB = true;
+  ScrollController toTopScrollCtrl = new ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    toTopScrollCtrl = ScrollController();
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    toTopScrollCtrl.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
+      floatingActionButton: showFAB?FloatingActionButton(
+        child: Icon(Icons.keyboard_arrow_up),
+        backgroundColor: BaseColor.baseColor,
+        onPressed: (){
+          toTopScrollCtrl.animateTo(toTopScrollCtrl.position.minScrollExtent, duration: Duration(
+              microseconds: 1000
+          ), curve: Curves.easeIn);
+          },
+      ):Container(),
       backgroundColor: BaseColor.baseColor,
       body: Scrollbar(
         child: SingleChildScrollView(
+          controller: toTopScrollCtrl,
           child: Padding(
             padding: EdgeInsets.only(top: 10),
             child: Column(
@@ -54,6 +71,9 @@ class _MyListState extends State<MyList> {
                       });
                       return GestureDetector(
                         onTap: () {
+                          setState(() {
+                            MyVariable.isList = true;
+                          });
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -182,7 +202,7 @@ class _MyListState extends State<MyList> {
                     ),
                     child: Center(
                         child: Text(
-                      '${score}',
+                      '${score == null? '0':score}',
                       style: TextStyle(
                           fontFamily: MyFonts.baloo,
                           fontSize: 18,
@@ -205,7 +225,7 @@ class _MyListState extends State<MyList> {
                     width: 10,
                   ),
                   Text(
-                    '${episodes} eps',
+                    '${episodes == null?'0':episodes} eps',
                     style: TextStyle(
                         fontFamily: MyFonts.baloo,
                         fontSize: 18,
