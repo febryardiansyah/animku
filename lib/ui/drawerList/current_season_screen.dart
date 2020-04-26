@@ -13,6 +13,24 @@ class CurrentSeasonScreen extends StatefulWidget {
 }
 
 class _CurrentSeasonScreenState extends State<CurrentSeasonScreen> {
+  FallBloc fallBloc;
+  SpringBloc springBloc;
+  SummerBloc summerBloc;
+  WinterBloc winterBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fallBloc = BlocProvider.of<FallBloc>(context);
+    fallBloc.add(FetchCurrentEvent());
+    springBloc = BlocProvider.of<SpringBloc>(context);
+    springBloc.add(FetchCurrentEvent());
+    summerBloc = BlocProvider.of<SummerBloc>(context);
+    summerBloc.add(FetchCurrentEvent());
+    winterBloc = BlocProvider.of<WinterBloc>(context);
+    winterBloc.add(FetchCurrentEvent());
+  }
   @override
   Widget build(BuildContext context) {
     return BottomNavBar();

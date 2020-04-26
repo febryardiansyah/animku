@@ -2,6 +2,7 @@ import 'package:animku/components/season_title.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/models/current_season_model.dart';
+import 'package:animku/ui/detailscreen/details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,8 +42,12 @@ class _MyGridState extends State<MyGrid> {
                     itemBuilder: (context, i) {
                       return ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        child: InkWell(
-                          onTap: () {},
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => DetailsScreen(title: widget.animeList[i].title,)
+                            ));
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: BaseColor.white,

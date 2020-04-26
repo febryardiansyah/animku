@@ -24,13 +24,13 @@ class _SummerScreenState extends State<SummerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    summerBloc = BlocProvider.of<SummerBloc>(context);
-    summerBloc.add(FetchCurrentEvent());
+
   }
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
       onRefresh: (){
+        summerBloc = BlocProvider.of<SummerBloc>(context);
         summerBloc.add(FetchCurrentEvent());
       },
       isList: MyVariable.isList,

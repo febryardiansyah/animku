@@ -9,7 +9,7 @@ class MyList extends StatefulWidget {
   final List<AnimeList> animeList;
   final seasonTitle;
 
-  const MyList({Key key, this.animeList,this.seasonTitle}) : super(key: key);
+  const MyList({Key key, this.animeList, this.seasonTitle}) : super(key: key);
 
   @override
   _MyListState createState() => _MyListState();
@@ -23,6 +23,7 @@ class _MyListState extends State<MyList> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -35,9 +36,7 @@ class _MyListState extends State<MyList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _seasonTitle(
-                  judul: widget.seasonTitle
-                ),
+                _seasonTitle(judul: widget.seasonTitle),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   child: ListView.builder(
@@ -46,15 +45,31 @@ class _MyListState extends State<MyList> {
                     itemCount: widget.animeList.length,
                     itemBuilder: (context, i) {
                       List<String> genList = new List();
-                      widget.animeList[i].genreList.forEach((v){
+                      List<String> studioList = new List();
+                      widget.animeList[i].genreList.forEach((v) {
                         genList.add(v.name);
                       });
-                      return InkWell(
-                        splashColor: BaseColor.transparent,
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => DetailsScreen(title: widget.animeList[i].title,)
-                          ));
+                      widget.animeList[i].producers.forEach((f) {
+                        studioList.add(f.name);
+                      });
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailsScreen(
+                                        title: widget.animeList[i].title,
+                                        imageUrl: widget.animeList[i].imageUrl,
+                                        genre: genList,
+                                        episodes: widget.animeList[i].episodes,
+                                        score: widget.animeList[i].score,
+                                        members: widget.animeList[i].members,
+                                        airing: widget.animeList[i].airingStart,
+                                        source: widget.animeList[i].source,
+                                        studio: studioList,
+                                        synopsis: widget.animeList[i].synopsis,
+                                        type: widget.animeList[i].type,
+                                      )));
                         },
                         child: Container(
                           child: Stack(
@@ -82,20 +97,26 @@ class _MyListState extends State<MyList> {
       ),
     );
   }
-  Widget _seasonTitle({String judul}){
+
+  Widget _seasonTitle({String judul}) {
     ScreenUtil.init(context);
     return Container(
       height: 200.h,
       width: 700.w,
       color: BaseColor.greyPurple,
       child: Center(
-        child: Text(judul,style: TextStyle(fontFamily: MyFonts.baloo,fontSize: 40,color: BaseColor.white),),
+        child: Text(
+          judul,
+          style: TextStyle(
+              fontFamily: MyFonts.baloo, fontSize: 40, color: BaseColor.white),
+        ),
       ),
     );
   }
+
   Widget _background({
     title,
-    List<String>genre,
+    List<String> genre,
     score,
     episodes,
   }) {
@@ -122,12 +143,25 @@ class _MyListState extends State<MyList> {
                       fontSize: 20),
                 ),
               ),
-              Text(
-                '${genre}',
-                style: TextStyle(color: Color(0xffF0F0F0), fontSize: 14),
-              ),
-              SizedBox(
-                height: 10,
+              Expanded(
+                child: ListView.builder(
+                  itemCount: genre.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: ClampingScrollPhysics(),
+                  itemBuilder: (context, i) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          genre[i].toString() + ' ',
+                          style:
+                              TextStyle(color: Color(0xffF0F0F0), fontSize: 14),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
               Row(
                 children: <Widget>[

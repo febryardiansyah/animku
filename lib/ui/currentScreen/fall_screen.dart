@@ -20,18 +20,17 @@ class FallScreen extends StatefulWidget {
 
 class _FallScreenState extends State<FallScreen> {
   FallBloc fallBloc;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fallBloc = BlocProvider.of<FallBloc>(context);
-    fallBloc.add(FetchCurrentEvent());
+
   }
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
       onRefresh: (){
+        fallBloc = BlocProvider.of<FallBloc>(context);
         fallBloc.add(FetchCurrentEvent());
       },
       isList: MyVariable.isList,

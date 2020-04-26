@@ -25,16 +25,10 @@ class _SpringScreenState extends State<SpringScreen> {
   SpringBloc springBloc;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    springBloc = BlocProvider.of<SpringBloc>(context);
-    springBloc.add(FetchCurrentEvent());
-  }
-  @override
   Widget build(BuildContext context) {
     return MyAppbar(
       onRefresh: (){
+        springBloc = BlocProvider.of<SpringBloc>(context);
         springBloc.add(FetchCurrentEvent());
       },
       isList: MyVariable.isList,

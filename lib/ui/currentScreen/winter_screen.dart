@@ -20,13 +20,6 @@ class _WinterScreenState extends State<WinterScreen> {
   WinterBloc winterBloc;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    winterBloc = BlocProvider.of<WinterBloc>(context);
-    winterBloc.add(FetchCurrentEvent());
-  }
-  @override
   Widget build(BuildContext context) {
     return BlocListener<WinterBloc,CurrentBlocState>(
       listener: (context,state){
@@ -40,6 +33,7 @@ class _WinterScreenState extends State<WinterScreen> {
       },
       child: MyAppbar(
         onRefresh: (){
+          winterBloc = BlocProvider.of<WinterBloc>(context);
           winterBloc.add(FetchCurrentEvent());
         },
         isList: MyVariable.isList,
