@@ -22,14 +22,18 @@ class _CurrentSeasonScreenState extends State<CurrentSeasonScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fallBloc = BlocProvider.of<FallBloc>(context);
-    fallBloc.add(FetchCurrentEvent());
-    springBloc = BlocProvider.of<SpringBloc>(context);
-    springBloc.add(FetchCurrentEvent());
-    summerBloc = BlocProvider.of<SummerBloc>(context);
-    summerBloc.add(FetchCurrentEvent());
     winterBloc = BlocProvider.of<WinterBloc>(context);
     winterBloc.add(FetchCurrentEvent());
+    Future.delayed(Duration(seconds: 2),(){
+      setState(() {
+        springBloc = BlocProvider.of<SpringBloc>(context);
+        springBloc.add(FetchCurrentEvent());
+        summerBloc = BlocProvider.of<SummerBloc>(context);
+        summerBloc.add(FetchCurrentEvent());
+        fallBloc = BlocProvider.of<FallBloc>(context);
+        fallBloc.add(FetchCurrentEvent());
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {

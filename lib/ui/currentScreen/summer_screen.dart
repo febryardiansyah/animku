@@ -21,12 +21,6 @@ class SummerScreen extends StatefulWidget {
 class _SummerScreenState extends State<SummerScreen> {
   SummerBloc summerBloc;
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
-  @override
   Widget build(BuildContext context) {
     return MyAppbar(
       onRefresh: (){

@@ -4,6 +4,7 @@ import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/environments/my_variable.dart';
 import 'package:animku/models/current_season_model.dart';
 import 'package:animku/ui/detailscreen/details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,13 +20,46 @@ class MyGrid extends StatefulWidget {
 }
 
 class _MyGridState extends State<MyGrid> {
+  ScrollController _scrollController = ScrollController();
+  bool showFab = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(scrollistener);
+  }
+  scrollistener(){
+    if(_scrollController.offset >= _scrollController.position.maxScrollExtent){
+      setState(() {
+        showFab = true;
+      });
+    }else {
+      setState(() {
+        showFab = false;
+      });
+    }
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
       backgroundColor: BaseColor.baseColor,
+      floatingActionButton: showFab?FloatingActionButton(
+        onPressed: (){
+          _scrollController.animateTo(_scrollController.position.minScrollExtent, duration: Duration(microseconds: 1000), curve: Curves.easeIn);
+        },
+        backgroundColor: BaseColor.baseColor,
+        child: Icon(Icons.keyboard_arrow_up),
+      ):Container(),
       body: Scrollbar(
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Padding(
             padding: EdgeInsets.only(top: 10),
             child: Column(
@@ -72,20 +106,25 @@ class _MyGridState extends State<MyGrid> {
                               )
                             ));
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: BaseColor.white,
-                                image: DecorationImage(
-                                    image: NetworkImage(widget.animeList[i].imageUrl),
-                                    fit: BoxFit.cover)),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 56.h,
-                                width: double.infinity,
-                                color: BaseColor.purpleToBlue,
-                                child: Center(
-                                  child: Text('${widget.animeList[i].title}',style: TextStyle(color: BaseColor.white,fontFamily: MyFonts.baloo)),
+                          child: CachedNetworkImage(
+                            imageUrl:widget.animeList[i].imageUrl ,
+                            placeholder: (context,loading)=>CircularProgressIndicator(),
+                            errorWidget: (context,error,_)=> Icon(Icons.error),
+                            imageBuilder:(context,imageProvider)=> Container(
+                              decoration: BoxDecoration(
+                                  color: BaseColor.white,
+                                  image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover)),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  height: 56.h,
+                                  width: double.infinity,
+                                  color: BaseColor.purpleToBlue,
+                                  child: Center(
+                                    child: Text('${widget.animeList[i].title}',textAlign: TextAlign.center,style: TextStyle(color: BaseColor.white,fontFamily: MyFonts.baloo)),
+                                  ),
                                 ),
                               ),
                             ),

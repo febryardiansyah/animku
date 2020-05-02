@@ -1,29 +1,46 @@
+import 'package:animku/bloc/current_season_bloc/current_bloc_state.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/environments/my_variable.dart';
 import 'package:animku/models/current_season_model.dart';
 import 'package:animku/ui/detailscreen/details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyList extends StatefulWidget {
   final List<AnimeList> animeList;
   final seasonTitle;
 
-  const MyList({Key key, this.animeList, this.seasonTitle}) : super(key: key);
+  const MyList({Key key, this.animeList, this.seasonTitle,}) : super(key: key);
 
   @override
   _MyListState createState() => _MyListState();
 }
 
 class _MyListState extends State<MyList> {
-  bool showFAB = true;
+  bool showFAB = false;
   ScrollController toTopScrollCtrl = new ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     toTopScrollCtrl = ScrollController();
+    toTopScrollCtrl.addListener(_scrollListener);
+
+  }
+  _scrollListener(){
+    if(toTopScrollCtrl.offset >= toTopScrollCtrl.position.maxScrollExtent && toTopScrollCtrl.position.userScrollDirection == ScrollDirection.reverse){
+      setState(() {
+        showFAB = true;
+      });
+    }else if(toTopScrollCtrl.offset <= toTopScrollCtrl.position.minScrollExtent){
+      setState(() {
+        showFAB = false;
+      });
+    }
   }
   @override
   void dispose() {
@@ -35,14 +52,17 @@ class _MyListState extends State<MyList> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
-      floatingActionButton: showFAB?FloatingActionButton(
-        child: Icon(Icons.keyboard_arrow_up),
-        backgroundColor: BaseColor.baseColor,
-        onPressed: (){
-          toTopScrollCtrl.animateTo(toTopScrollCtrl.position.minScrollExtent, duration: Duration(
-              microseconds: 1000
-          ), curve: Curves.easeIn);
-          },
+      floatingActionButton: showFAB?AnimatedContainer(
+        duration: Duration(seconds: 3),
+        child: FloatingActionButton(
+          child: Icon(Icons.keyboard_arrow_up),
+          backgroundColor: BaseColor.baseColor,
+          onPressed: (){
+            toTopScrollCtrl.animateTo(toTopScrollCtrl.position.minScrollExtent, duration: Duration(
+                microseconds: 1000
+            ), curve: Curves.easeIn);
+            },
+        ),
       ):Container(),
       backgroundColor: BaseColor.baseColor,
       body: Scrollbar(
@@ -241,22 +261,27 @@ class _MyListState extends State<MyList> {
   }
 
   Widget _animePic({imageUrl}) {
-    return Container(
-      margin: EdgeInsets.only(left: 10),
-      width: 320.w,
-      height: 540.h,
-      decoration: BoxDecoration(
-          color: BaseColor.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(5, 5),
-              color: Colors.black12,
-            ),
-            BoxShadow(offset: Offset(-5, -5), color: Colors.black12)
-          ],
-          image:
-              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.fill)),
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      placeholder: (context, url) => CircularProgressIndicator(),
+      errorWidget: (context, url, error) => Icon(Icons.error),
+      imageBuilder:(context,imageProvider) => Container(
+        margin: EdgeInsets.only(left: 10),
+        width: 320.w,
+        height: 540.h,
+        decoration: BoxDecoration(
+            color: BaseColor.white,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(5, 5),
+                color: Colors.black12,
+              ),
+              BoxShadow(offset: Offset(-5, -5), color: Colors.black12)
+            ],
+            image:
+                DecorationImage(image: imageProvider, fit: BoxFit.cover)),
+      ),
     );
   }
 }
