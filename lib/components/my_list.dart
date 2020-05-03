@@ -1,4 +1,5 @@
 import 'package:animku/bloc/current_season_bloc/current_bloc_state.dart';
+import 'package:animku/components/my_behavior.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/environments/my_variable.dart';
@@ -20,117 +21,109 @@ class MyList extends StatefulWidget {
 }
 
 class _MyListState extends State<MyList> {
-  bool showFAB = false;
-  ScrollController toTopScrollCtrl = new ScrollController();
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    toTopScrollCtrl = ScrollController();
-    toTopScrollCtrl.addListener(_scrollListener);
-
-  }
-  _scrollListener(){
-    if(toTopScrollCtrl.offset >= toTopScrollCtrl.position.maxScrollExtent && toTopScrollCtrl.position.userScrollDirection == ScrollDirection.reverse){
-      setState(() {
-        showFAB = true;
-      });
-    }else if(toTopScrollCtrl.offset <= toTopScrollCtrl.position.minScrollExtent){
-      setState(() {
-        showFAB = false;
-      });
-    }
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    toTopScrollCtrl.dispose();
+    MyVariable.bottomBarCtrl.addListener((){
+      if(MyVariable.bottomBarCtrl.offset >= MyVariable.bottomBarCtrl.position.maxScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
+        setState(() {
+          MyVariable.showFAB = true;
+        });
+      }
+      if(MyVariable.bottomBarCtrl.offset <= MyVariable.bottomBarCtrl.position.minScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
+        setState(() {
+          MyVariable.showFAB = false;
+        });
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
-      floatingActionButton: showFAB?AnimatedContainer(
+      floatingActionButton: MyVariable.showFAB?AnimatedContainer(
         duration: Duration(seconds: 3),
         child: FloatingActionButton(
           child: Icon(Icons.keyboard_arrow_up),
           backgroundColor: BaseColor.baseColor,
           onPressed: (){
-            toTopScrollCtrl.animateTo(toTopScrollCtrl.position.minScrollExtent, duration: Duration(
+            MyVariable.bottomBarCtrl.animateTo(MyVariable.bottomBarCtrl.position.minScrollExtent, duration: Duration(
                 microseconds: 1000
             ), curve: Curves.easeIn);
             },
         ),
       ):Container(),
       backgroundColor: BaseColor.baseColor,
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          controller: toTopScrollCtrl,
-          child: Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _seasonTitle(judul: widget.seasonTitle),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: widget.animeList.length,
-                    itemBuilder: (context, i) {
-                      List<String> genList = new List();
-                      List<String> studioList = new List();
-                      widget.animeList[i].genreList.forEach((v) {
-                        genList.add(v.name);
-                      });
-                      widget.animeList[i].producers.forEach((f) {
-                        studioList.add(f.name);
-                      });
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            MyVariable.isList = true;
-                          });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailsScreen(
-                                        title: widget.animeList[i].title,
-                                        imageUrl: widget.animeList[i].imageUrl,
-                                        genre: genList,
-                                        episodes: widget.animeList[i].episodes,
-                                        score: widget.animeList[i].score,
-                                        members: widget.animeList[i].members,
-                                        airing: widget.animeList[i].airingStart,
-                                        source: widget.animeList[i].source,
-                                        studio: studioList,
-                                        synopsis: widget.animeList[i].synopsis,
-                                        type: widget.animeList[i].type,
-                                      )));
-                        },
-                        child: Container(
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                height: 600.h,
-                              ),
-                              _background(
-                                  title: widget.animeList[i].title,
-                                  genre: genList,
-                                  episodes: widget.animeList[i].episodes,
-                                  score: widget.animeList[i].score),
-                              _animePic(imageUrl: widget.animeList[i].imageUrl)
-                            ],
+      body: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            controller: MyVariable.bottomBarCtrl,
+            child: Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _seasonTitle(judul: widget.seasonTitle),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: widget.animeList.length,
+                      itemBuilder: (context, i) {
+                        List<String> genList = new List();
+                        List<String> studioList = new List();
+                        widget.animeList[i].genreList.forEach((v) {
+                          genList.add(v.name);
+                        });
+                        widget.animeList[i].producers.forEach((f) {
+                          studioList.add(f.name);
+                        });
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              MyVariable.isList = true;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailsScreen(
+                                          title: widget.animeList[i].title,
+                                          imageUrl: widget.animeList[i].imageUrl,
+                                          genre: genList,
+                                          episodes: widget.animeList[i].episodes,
+                                          score: widget.animeList[i].score,
+                                          members: widget.animeList[i].members,
+                                          airing: widget.animeList[i].airingStart,
+                                          source: widget.animeList[i].source,
+                                          studio: studioList,
+                                          synopsis: widget.animeList[i].synopsis,
+                                          type: widget.animeList[i].type,
+                                        )));
+                          },
+                          child: Container(
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  height: 600.h,
+                                ),
+                                _background(
+                                    title: widget.animeList[i].title,
+                                    genre: genList,
+                                    episodes: widget.animeList[i].episodes,
+                                    score: widget.animeList[i].score),
+                                _animePic(imageUrl: widget.animeList[i].imageUrl)
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

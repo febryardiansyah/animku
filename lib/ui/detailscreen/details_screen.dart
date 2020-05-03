@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:animku/components/my_behavior.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/environments/my_variable.dart';
@@ -58,22 +59,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
               expand: true,
               builder: (context,controller){
                 return Container(
-                  height: 1300.h,
-                  child: ListView(
-                    controller: controller,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            _title(),
-//                            _genre(),
-                            _box1(),
-                            _box2(),
-                          ],
-                        ),
-                      )
-                    ],
+                  height: widget.synopsis.length<=100?500.h:1300.h,
+                  child: ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: ListView(
+                      controller: controller,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              _title(),
+//                              _genre(),
+                              _box1(),
+                              _box2(),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   decoration: BoxDecoration(
                       color: BaseColor.white,
@@ -177,31 +181,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
   Widget _genre() {
-    return Scrollbar(
-      child: Container(
-        child: ListView.builder(
-          physics: ClampingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: widget.genre.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, i) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Card(
-                    color: Color(0xffF25959),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.genre[i].toString() + ' ',
-                        style: TextStyle(color: BaseColor.white),
-                      ),
-                    )),
-              ],
-            );
-          },
-        ),
-      ),
+    return ListView.builder(
+      physics: ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: widget.genre.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, i) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Card(
+                color: Color(0xffF25959),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.genre[i].toString() + ' ',
+                    style: TextStyle(color: BaseColor.white),
+                  ),
+                )),
+          ],
+        );
+      },
     );
   }
   Widget _box1() {
@@ -325,91 +325,88 @@ class _DetailsScreenState extends State<DetailsScreen> {
     for (int i = 0; i < widget.studio.length; i++) {
       studio = widget.studio[i];
     }
-    return Padding(
-      padding: EdgeInsets.only(bottom: 15),
-      child: Card(
-        elevation: 8,
-        color: BaseColor.baseColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.all(8),
-          child: Row(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: 970.w,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _detailItems(
-                          title: widget.airing == null
-                              ? 'Unknown'
-                              : widget.airing.substring(0, 10),
-                          icon: Icons.date_range),
-                      _detailItems(
-                          title: studio == null ? '' : studio,
-                          icon: FontAwesomeIcons.building),
-                      _detailItems(
-                          title:
-                              '${widget.members == null ? '' : formatNumber.format(widget.members)}',
-                          icon: Icons.people),
-                      SizedBox(
-                        height: 30,
+    return Card(
+      elevation: 8,
+      color: BaseColor.baseColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Container(
+        height: widget.synopsis.length<=100?1000.h:MediaQuery.of(context).size.height,
+        padding: EdgeInsets.all(8),
+        child: Row(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: 970.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _detailItems(
+                        title: widget.airing == null
+                            ? 'Unknown'
+                            : widget.airing.substring(0, 10),
+                        icon: Icons.date_range),
+                    _detailItems(
+                        title: studio == null ? '' : studio,
+                        icon: FontAwesomeIcons.building),
+                    _detailItems(
+                        title:
+                            '${widget.members == null ? '' : formatNumber.format(widget.members)}',
+                        icon: Icons.people),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Synopsis',
+                      style: TextStyle(
+                          color: BaseColor.orange,
+                          fontSize: 20,
+                          fontFamily: MyFonts.baloo),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      width: 950.w,
+                      child: Text(
+                        '${widget.synopsis}',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(color: BaseColor.white),
                       ),
-                      Text(
-                        'Synopsis',
-                        style: TextStyle(
-                            color: BaseColor.orange,
-                            fontSize: 20,
-                            fontFamily: MyFonts.baloo),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        width: 950.w,
-                        child: Text(
-                          '${widget.synopsis}',
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(color: BaseColor.white),
-                        ),
-                      ),
+                    ),
 
-                    ],
-                  ),
-                  Positioned(
-                    left: 600.w,
-                    child: CachedNetworkImage(
-                      imageUrl: widget.imageUrl,
-                      errorWidget: (context,error,_)=>Text(error),
-                      placeholder: (context,url) => CircularProgressIndicator(),
-                      imageBuilder: (context,imageProvider)=>
-                      Container(
-                        height: 430.h,
-                        width: 350.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(5, 5),
-                              color: Colors.black12,
-                            ),
-                            BoxShadow(offset: Offset(-5, -5), color: Colors.black12)
-                          ],
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover
+                  ],
+                ),
+                Positioned(
+                  left: 600.w,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.imageUrl,
+                    errorWidget: (context,error,_)=>Text(error),
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    imageBuilder: (context,imageProvider)=>
+                    Container(
+                      height: 430.h,
+                      width: 350.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(5, 5),
+                            color: Colors.black12,
                           ),
+                          BoxShadow(offset: Offset(-5, -5), color: Colors.black12)
+                        ],
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover
                         ),
                       ),
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
+                  ),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

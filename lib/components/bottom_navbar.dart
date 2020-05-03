@@ -5,6 +5,7 @@ import 'package:animku/components/my_app_bar.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
 import 'package:animku/environments/end_point_path.dart';
+import 'package:animku/environments/my_variable.dart';
 import 'package:animku/repository/current_season_repo.dart';
 import 'package:animku/ui/currentScreen/fall_screen.dart';
 import 'package:animku/ui/currentScreen/spring_screen.dart';
@@ -32,52 +33,62 @@ class _BottomNavBarState extends State<BottomNavBar> {
     SummerScreen(),
     FallScreen()
   ];
-  ScrollController _scrollController;
-  bool isVisible = true;
+  bool bottomBarVisible = true;
+
+  _bottomScrollListener(){
+    if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.reverse){
+      setState(() {
+        bottomBarVisible = false;
+      });
+    }
+    if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.forward){
+      setState(() {
+        bottomBarVisible = true;
+      });
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _scrollController = new ScrollController();
-    _scrollController.addListener((){
-      if(_scrollController.position.userScrollDirection == ScrollDirection.reverse){
-        setState(() {
-          isVisible = false;
-        });
-      }else{
-        setState(() {
-          isVisible = true;
-        });
-      }
-    });
+    MyVariable.bottomBarCtrl.addListener(_bottomScrollListener);
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    MyVariable.bottomBarCtrl.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[currentIndex],
-      bottomNavigationBar: !isVisible?Container():BottomNavyBar(
-        selectedIndex: currentIndex,
-        onItemSelected: onTapTapped,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        items: [
-          _customItems(
-            icon: Icon(Icons.ac_unit),
-            title: Dictionary.winter
-          ),
-          _customItems(
-              icon: Icon(FontAwesomeIcons.leaf),
-              title: Dictionary.spring
-          ),
-          _customItems(
-            icon: Icon(Icons.wb_sunny),
-            title: Dictionary.summer
-          ),
-          _customItems(
-            icon: Icon(LineAwesomeIcons.leaf),
-            title: Dictionary.fall
-          )
-        ],
+      bottomNavigationBar: AnimatedContainer(
+        duration: Duration(milliseconds:500),
+        height: bottomBarVisible?60:0,
+        child: !bottomBarVisible?Container():BottomNavyBar(
+          selectedIndex: currentIndex,
+          onItemSelected: onTapTapped,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          items: [
+            _customItems(
+              icon: Icon(Icons.ac_unit),
+              title: Dictionary.winter
+            ),
+            _customItems(
+                icon: Icon(FontAwesomeIcons.leaf),
+                title: Dictionary.spring
+            ),
+            _customItems(
+              icon: Icon(Icons.wb_sunny),
+              title: Dictionary.summer
+            ),
+            _customItems(
+              icon: Icon(LineAwesomeIcons.leaf),
+              title: Dictionary.fall
+            )
+          ],
+        ),
       ),
     );
   }
