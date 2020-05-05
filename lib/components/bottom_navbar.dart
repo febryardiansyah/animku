@@ -37,14 +37,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   _bottomScrollListener(){
     if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.reverse){
-      setState(() {
-        bottomBarVisible = false;
-      });
+      if(mounted){
+        setState(() {
+          bottomBarVisible = false;
+        });
+      }
     }
     if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.forward){
-      setState(() {
-        bottomBarVisible = true;
-      });
+      if(mounted){
+        setState(() {
+          bottomBarVisible = true;
+        });
+      }
     }
   }
   @override
@@ -52,12 +56,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     // TODO: implement initState
     super.initState();
     MyVariable.bottomBarCtrl.addListener(_bottomScrollListener);
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    MyVariable.bottomBarCtrl.dispose();
   }
   @override
   Widget build(BuildContext context) {

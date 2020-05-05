@@ -32,4 +32,6 @@ class Dictionary{
   static String thursday = 'Thursday';
   static String friday = 'Friday';
   static String saturday = 'Saturday';
+
+  static String tenkinokowp = 'assets/images/tenkinokowp.png';
 }

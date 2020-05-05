@@ -20,4 +20,6 @@ class EndPointPath{
   static String saturday = '/schedule/saturday';
   static String sunday = '/schedule/sunday';
 
+  static String seasonLater = '/season/later';
+
 }

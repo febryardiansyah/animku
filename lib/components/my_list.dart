@@ -27,14 +27,18 @@ class _MyListState extends State<MyList> {
     super.initState();
     MyVariable.bottomBarCtrl.addListener((){
       if(MyVariable.bottomBarCtrl.offset >= MyVariable.bottomBarCtrl.position.maxScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
-        setState(() {
-          MyVariable.showFAB = true;
-        });
+        if(mounted){
+          setState(() {
+            MyVariable.showFAB = true;
+          });
+        }
       }
       if(MyVariable.bottomBarCtrl.offset <= MyVariable.bottomBarCtrl.position.minScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
-        setState(() {
-          MyVariable.showFAB = false;
-        });
+        if (mounted) {
+          setState(() {
+            MyVariable.showFAB = false;
+          });
+        }
       }
     });
   }

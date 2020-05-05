@@ -5,10 +5,13 @@ import 'package:animku/bloc/current_season_bloc/winter_bloc.dart';
 import 'package:animku/bloc/simple_bloc_delegate.dart';
 import 'package:animku/components/bottom_navbar.dart';
 import 'package:animku/repository/current_season_repo.dart';
+import 'package:animku/repository/season_later_repo.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'bloc/seasonLaterBloc/season_later_bloc.dart';
 
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
@@ -33,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => FallBloc(CurrSeasonImp()),
+        ),
+        BlocProvider(
+          create: (context) => SeasonLaterBloc(seasonLaterRepository: SeasonLaterImplements()),
         )
       ],
       child: MaterialApp(

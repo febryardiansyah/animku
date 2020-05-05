@@ -13,8 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MyGrid extends StatefulWidget {
   final List<AnimeList> animeList;
   final String judul;
+  final Widget searchBar;
 
-  const MyGrid({Key key, this.animeList,this.judul}) : super(key: key);
+  const MyGrid({Key key, this.animeList,this.judul,this.searchBar}) : super(key: key);
 
   @override
   _MyGridState createState() => _MyGridState();
@@ -27,14 +28,18 @@ class _MyGridState extends State<MyGrid> {
     super.initState();
     MyVariable.bottomBarCtrl.addListener((){
       if(MyVariable.bottomBarCtrl.offset >= MyVariable.bottomBarCtrl.position.maxScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
-        setState(() {
-          MyVariable.showFAB = true;
-        });
+        if(mounted){
+          setState(() {
+            MyVariable.showFAB = true;
+          });
+        }
       }
       if(MyVariable.bottomBarCtrl.offset <= MyVariable.bottomBarCtrl.position.minScrollExtent && !MyVariable.bottomBarCtrl.position.outOfRange){
-        setState(() {
-          MyVariable.showFAB = false;
-        });
+        if (mounted) {
+          setState(() {
+            MyVariable.showFAB = false;
+          });
+        }
       }
     });
   }
@@ -61,6 +66,7 @@ class _MyGridState extends State<MyGrid> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SeasonTitle(judul: widget.judul,),
+                  Container(child: widget.searchBar),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                     child: GridView.builder(

@@ -22,7 +22,7 @@ class DetailsScreen extends StatefulWidget {
       airing,
       members,
       synopsis;
-  final List<String> genre;
+  final genre;
   final List<String> studio;
 
   const DetailsScreen(
@@ -70,7 +70,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           child: Column(
                             children: <Widget>[
                               _title(),
-//                              _genre(),
+                              _genre(),
                               _box1(),
                               _box2(),
                             ],
@@ -181,28 +181,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
   Widget _genre() {
-    return ListView.builder(
-      physics: ClampingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: widget.genre.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, i) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-                color: Color(0xffF25959),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.genre[i].toString() + ' ',
-                    style: TextStyle(color: BaseColor.white),
-                  ),
-                )),
-          ],
-        );
-      },
-    );
+    return Text(widget.genre.toString());
+//    return ListView.builder(
+//      physics: ClampingScrollPhysics(),
+//      shrinkWrap: true,
+//      itemCount: widget.genre.length,
+//      scrollDirection: Axis.horizontal,
+//      itemBuilder: (context, i) {
+//        return Row(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//          children: <Widget>[
+//            Card(
+//                color: Color(0xffF25959),
+//                child: Padding(
+//                  padding: const EdgeInsets.all(8.0),
+//                  child: Text(
+//                    widget.genre[i].toString() + ' ',
+//                    style: TextStyle(color: BaseColor.white),
+//                  ),
+//                )),
+//          ],
+//        );
+//      },
+//    );
   }
   Widget _box1() {
     return Card(
