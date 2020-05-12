@@ -4,7 +4,7 @@ Animku is unofficial myanimelist.com app that will be available on ios and andro
 
 if you want to contribute on this project, you can fork this project and pull request.
 
-#TODO
+# TODO
 
 - [x] current season screen
 - [x] drawer and items
