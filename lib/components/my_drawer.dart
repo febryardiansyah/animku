@@ -1,7 +1,9 @@
 import 'package:animku/environments/dictionary.dart';
 import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
+import 'package:animku/ui/drawerList/schedule_screen.dart';
 import 'package:animku/ui/drawerList/season_later_screen.dart';
+import 'package:animku/ui/scheduleScreen/sunday_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +42,10 @@ class MyDrawer extends StatelessWidget {
                 leading: Icon(Icons.date_range),
                 text: Text('Schedule'),
                 trailing: Icon(Icons.arrow_forward_ios),
-                onTapTabbed: (){}
+                onTapTabbed: (){
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ScheduleScreen()),
+                          (Route<dynamic> route) => false);
+                }
             ),
             _drawerItems(
                 leading: Icon(FontAwesomeIcons.search),

@@ -8,7 +8,7 @@ abstract class SeasonLaterEvent extends Equatable{}
 class FetchSeasonLaterEvent extends SeasonLaterEvent{
   @override
   // TODO: implement props
-  List<Object> get props => null;
+  List<Object> get props => [];
 }
 
 abstract class SeasonLaterState extends Equatable{}

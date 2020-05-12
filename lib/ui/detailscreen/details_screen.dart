@@ -22,7 +22,7 @@ class DetailsScreen extends StatefulWidget {
       airing,
       members,
       synopsis;
-  final genre;
+  final List<String>genre;
   final List<String> studio;
 
   const DetailsScreen(
@@ -139,35 +139,35 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ],
     );
   }
-  Widget _details() {
-    ScreenUtil.init(context);
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          height: 1300.h,
-          decoration: BoxDecoration(color: BaseColor.white, boxShadow: [
-            BoxShadow(
-                color: Colors.black, offset: Offset(-10, -10), blurRadius: 8),
-          ]),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: <Widget>[
-                _title(),
-//                _genre(),
-                _box1(),
-                _box2()
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+//  Widget _details() {
+//    ScreenUtil.init(context);
+//    return Align(
+//      alignment: Alignment.bottomCenter,
+//      child: ClipRRect(
+//        borderRadius: BorderRadius.only(
+//            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+//        child: Container(
+//          alignment: Alignment.bottomCenter,
+//          height: 1300.h,
+//          decoration: BoxDecoration(color: BaseColor.white, boxShadow: [
+//            BoxShadow(
+//                color: Colors.black, offset: Offset(-10, -10), blurRadius: 8),
+//          ]),
+//          child: Padding(
+//            padding: const EdgeInsets.all(8.0),
+//            child: ListView(
+//              children: <Widget>[
+//                _title(),
+////                _genre(),
+//                _box1(),
+//                _box2()
+//              ],
+//            ),
+//          ),
+//        ),
+//      ),
+//    );
+//  }
   Widget _title() {
     return Center(
       child: Text(
@@ -181,7 +181,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
   Widget _genre() {
-    return Text(widget.genre.toString());
+    String name;
+    widget.genre.forEach((f){
+      print(f);
+    });
+    return Text(widget.genre.toString(),textAlign: TextAlign.center,);
 //    return ListView.builder(
 //      physics: ClampingScrollPhysics(),
 //      shrinkWrap: true,
