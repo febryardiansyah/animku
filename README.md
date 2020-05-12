@@ -10,7 +10,7 @@ if you want to contribute on this project, you can fork this project and pull re
 - [x] drawer and items
 - [x] anime detail
 - [x] schedule
-- [] search anime
-- [] top anime
-- [] splash screen
-- [] icon launcher
+- [ ] search anime
+- [ ] top anime
+- [ ] splash screen
+- [ ] icon launcher
