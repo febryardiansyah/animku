@@ -43,30 +43,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     // TODO: implement initState
     super.initState();
     print(currentDay);
-    sundayBloc = BlocProvider.of<SundayBloc>(context);
-    sundayBloc.add(FetchSchedule());
-    mondayBloc = BlocProvider.of<MondayBloc>(context);
-    mondayBloc.add(FetchSchedule());
-    tuesDayBloc = BlocProvider.of<TuesDayBloc>(context);
-    tuesDayBloc.add(FetchSchedule());
-    Future.delayed(Duration(seconds: 3),(){
-      wednesdayBloc = BlocProvider.of<WednesdayBloc>(context);
-      wednesdayBloc.add(FetchSchedule());
-      thursdayBloc = BlocProvider.of<ThursdayBloc>(context);
-      thursdayBloc.add(FetchSchedule());
-      fridayBloc = BlocProvider.of(context);
-      fridayBloc.add(FetchSchedule());
-      Future.delayed(Duration(seconds: 2),(){
-        saturdayBloc = BlocProvider.of<SaturdayBloc>(context);
-        saturdayBloc.add(FetchSchedule());
-      });
-    });
+    _init_();
   }
 
   @override
   Widget build(BuildContext context) {
     return MySecondAppBar(
-      onRefresh: () {},
+      onRefresh: () {
+        _init_();
+      },
       body: ListView(children: [
         DefaultTabController(
             length: 7,
@@ -153,5 +138,25 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         return null;
         break;
     }
+  }
+  void _init_(){
+    sundayBloc = BlocProvider.of<SundayBloc>(context);
+    sundayBloc.add(FetchSchedule());
+    mondayBloc = BlocProvider.of<MondayBloc>(context);
+    mondayBloc.add(FetchSchedule());
+    tuesDayBloc = BlocProvider.of<TuesDayBloc>(context);
+    tuesDayBloc.add(FetchSchedule());
+    Future.delayed(Duration(seconds: 3),(){
+      wednesdayBloc = BlocProvider.of<WednesdayBloc>(context);
+      wednesdayBloc.add(FetchSchedule());
+      thursdayBloc = BlocProvider.of<ThursdayBloc>(context);
+      thursdayBloc.add(FetchSchedule());
+      fridayBloc = BlocProvider.of(context);
+      fridayBloc.add(FetchSchedule());
+      Future.delayed(Duration(seconds: 2),(){
+        saturdayBloc = BlocProvider.of<SaturdayBloc>(context);
+        saturdayBloc.add(FetchSchedule());
+      });
+    });
   }
 }

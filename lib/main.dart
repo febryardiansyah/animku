@@ -13,7 +13,9 @@ import 'package:animku/bloc/schedule_bloc/wednesday_bloc.dart';
 import 'package:animku/bloc/simple_bloc_delegate.dart';
 import 'package:animku/components/bottom_navbar.dart';
 import 'package:animku/repository/current_season_repo.dart';
+import 'package:animku/repository/detail_by_id.dart';
 import 'package:animku/repository/schedule_repo.dart';
+import 'package:animku/repository/search_anime_repo.dart';
 import 'package:animku/repository/season_later_repo.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
 import 'package:flutter/material.dart';
@@ -71,17 +73,29 @@ class MyApp extends StatelessWidget {
           create: (context) => SaturdayBloc(ScheduleRepoImplement()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomPadding: false,
-          body: CurrentSeasonScreen(),
-        ),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => SearchAnimeProvider(),
+            lazy: true,
+          ),
+          ChangeNotifierProvider(
+            create: (context) => DetailByIdProvider(),
+            lazy: true,
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            resizeToAvoidBottomPadding: false,
+            body: CurrentSeasonScreen(),
+          ),
 //        initialRoute: '/',
 //        routes: {
 //          '/':(_) => SplashScreen(),
 //          '/botNavBar':(_) => BottomNavBar(),
 //        },
+        ),
       ),
     );
   }

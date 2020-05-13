@@ -22,7 +22,7 @@ class _FridayScreenState extends State<FridayScreen> {
         }else if(state is ScheduleLoadedState){
           return MyGrid(
             animeList: state.animeList,
-            judul: Dictionary.tuesday,
+            judul: Dictionary.friday,
           );
         }else if(state is ScheduleErrorState){
           return BuildError(errorMsg: state.message,);

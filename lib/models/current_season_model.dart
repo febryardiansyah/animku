@@ -26,16 +26,17 @@ class CurrentSeasonModel{
 class AnimeList{
   String title,imageUrl,synopsis,type,
   airingStart,source;
-  int members,episodes;
+  int members,episodes,malId;
   var score;
   List<GenreList> genreList;
   List<Producers> producers;
 
-  AnimeList({this.title, this.imageUrl, this.synopsis, this.type,
+  AnimeList({this.title, this.imageUrl, this.synopsis, this.type,this.malId,
       this.airingStart, this.episodes, this.source, this.genreList, this.producers,this.score,this.members});
 
   factory AnimeList.fromMap(Map<String,dynamic>json){
     return AnimeList(
+      malId: json['mal_id'],
       title: json['title'],
       imageUrl: json['image_url'],
       synopsis: json['synopsis'],

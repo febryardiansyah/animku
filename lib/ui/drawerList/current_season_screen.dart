@@ -7,8 +7,10 @@ import 'package:animku/bloc/schedule_bloc/monday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/shedule_event_state.dart';
 import 'package:animku/bloc/seasonLaterBloc/season_later_bloc.dart';
 import 'package:animku/components/bottom_navbar.dart';
+import 'package:animku/repository/search_anime_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CurrentSeasonScreen extends StatefulWidget {
   @override
