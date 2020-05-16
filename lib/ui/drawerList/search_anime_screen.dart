@@ -19,12 +19,10 @@ class SearchAnimeScreen extends StatefulWidget {
 
 class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
   TextEditingController textCtrl = TextEditingController();
+  var res;
   bool isLoading = false;
-  List<SearchModelResult>search;
   @override
   Widget build(BuildContext context) {
-    var searchList = Provider.of<SearchAnimeProvider>(context,listen: false).listSearch;
-    var detailById = Provider.of<DetailByIdProvider>(context,listen: false).searchListDetail;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: BaseColor.baseColor,
@@ -45,7 +43,14 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
             icon: Icon(Icons.arrow_forward_ios),
             onPressed: (){
               print(textCtrl.text);
-              Provider.of<SearchAnimeProvider>(context,listen: false).getSearchAnime(textCtrl.text);
+              Provider.of<SearchAnimeProvider>(context,listen: false).getSearchAnime(textCtrl.text).then((f){
+                res = f;
+                if(!res){
+                  isLoading = true;
+                }else{
+                  isLoading = false;
+                }
+              });
               FocusScope.of(context).requestFocus(FocusNode());
             },
           ),
@@ -58,11 +63,9 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
             itemBuilder: (context, i) {
               return GestureDetector(
                 onTap: (){
-                  Provider.of<DetailByIdProvider>(context,listen: false).getDetailById(data.listSearch[i].malId).then((res){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SecondDetail(
-                      searchList: res,
-                    ),));
-                  });
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondDetail(
+                    malId:data.listSearch[i].malId,
+                  )));
                 },
                 child: Card(
                   margin: EdgeInsets.all(10),

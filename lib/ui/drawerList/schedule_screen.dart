@@ -52,8 +52,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       onRefresh: () {
         _init_();
       },
-      body: ListView(children: [
-        DefaultTabController(
+      body: SingleChildScrollView(
+        child: DefaultTabController(
             length: 7,
             initialIndex: currentDayFn(),
             child: Column(
@@ -107,8 +107,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       )),
                 )
               ],
-            ))
-      ]),
+            )),
+      ),
     );
   }
   currentDayFn() {

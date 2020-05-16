@@ -15,6 +15,7 @@ class DetailByIdProvider with ChangeNotifier{
       notifyListeners();
       var res = json.decode(response.body);
       searchListDetail = SearchList.fromMap(res);
+      print(searchListDetail.malId);
       return searchListDetail;
     }else{
       throw Exception();

@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int currentIndex = 0;
+  int currentIndex;
   List<Widget>_children = [
     WinterScreen(),
     SpringScreen(),
@@ -34,6 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     FallScreen()
   ];
   bool bottomBarVisible = true;
+  String formatDate = DateFormat.MMMM().format(DateTime.now());
 
   _bottomScrollListener(){
     if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.reverse){
@@ -55,6 +57,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    checkSeasonIndex();
+    print(formatDate);
     MyVariable.bottomBarCtrl.addListener(_bottomScrollListener);
   }
   @override
@@ -89,6 +93,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
       ),
     );
+  }
+
+  int checkSeasonIndex(){
+    if(formatDate == 'Mar' || formatDate == 'Apr' || formatDate == 'May'){
+      return currentIndex = 1;
+    }else if(formatDate == 'Jun' || formatDate == 'Jul' || formatDate == 'Aug'){
+      return currentIndex = 2;
+    }else if(formatDate == 'Sep' || formatDate == 'Oct' || formatDate == 'Nov'){
+      return currentIndex = 3;
+    }else if(formatDate == 'Dec' || formatDate == 'Jan' || formatDate == 'Feb'){
+      return currentIndex = 0;
+    }
   }
   void onTapTapped(index){
     setState(() {

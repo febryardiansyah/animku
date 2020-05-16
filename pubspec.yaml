@@ -31,6 +31,8 @@ dependencies:
   cached_network_image: ^2.1.0+1
   sliding_sheet: ^0.3.4
   rxdart: ^0.23.1
+  url_launcher: ^5.4.7
+  webview_flutter: ^0.3.21
 
   flutter:
     sdk: flutter

@@ -44,42 +44,6 @@ class _SeasonLaterScreenState extends State<SeasonLaterScreen> {
              return MyGrid(
                animeList: state.animeList,
                judul: Dictionary.seasonLater,
-               searchBar: Center(
-                 child: Container(
-                   padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
-                   height: 70,
-                   child: TextField(
-                     controller: textEditingController,
-                     onChanged: (s){
-                       if(textEditingController.text.isEmpty){
-                         setState(() {
-                           cleartext = false;
-                         });
-                       }else if(textEditingController.text.isNotEmpty){
-                         setState(() {
-                           cleartext = true;
-                         });
-                       }
-                     },
-                     decoration: InputDecoration(
-                       filled: true,
-                       fillColor: BaseColor.white,
-                       hintText: 'Search Anime',
-                       prefixIcon: Icon(Icons.search),
-                       suffixIcon: cleartext?IconButton(
-                         color: BaseColor.baseColor,
-                         icon: Icon(Icons.clear),
-                         onPressed: (){
-                           textEditingController.clear();
-                         },
-                       ):null,
-                       border: OutlineInputBorder(
-                         borderRadius: BorderRadius.circular(20)
-                       ),
-                     ),
-                   ),
-                 ),
-               )
              );
            }else if(state is SeasonLaterErrorState){
              return BuildError(errorMsg: state.message,);

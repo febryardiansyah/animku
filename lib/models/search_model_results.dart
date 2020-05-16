@@ -34,14 +34,20 @@ class SearchModelResult{
 
 }
 class SearchList{
-  String title,imageUrl,synopsis,type,source;
-  int members,episodes,malId;
+  String title,imageUrl,synopsis,type,source,status,duration,trailer_url;
+  int members,episodes,malId,rank,popularity;
   var score;
   List<GenreList> genreList;
   List<Studios> studio;
+//  Aired aired;
+  List opening_themes;
+  List ending_themes;
 
   SearchList({this.title, this.imageUrl, this.synopsis, this.type,this.malId,
-     this.episodes, this.source, this.genreList, this.studio,this.score,this.members});
+     this.episodes, this.source, this.genreList, this.studio,this.score,this.members,
+    this.popularity,this.rank,this.status,this.duration,this.ending_themes,
+    this.opening_themes,this.trailer_url,
+  });
 
   factory SearchList.fromMap(Map<String,dynamic>json){
     return SearchList(
@@ -56,6 +62,14 @@ class SearchList{
       genreList: List<GenreList>.from(json['genres'].map((item)=>GenreList.fromMap(item))),
       source: json['source'],
       studio: List<Studios>.from(json['studios'].map((item)=>Studios.fromMap(item))),
+//      aired: json['aired'],
+      duration: json['duration'],
+      ending_themes: json['ending_themes'],
+      opening_themes: json['opening_themes'],
+      popularity: json['popularity'],
+      rank: json['rank'],
+      status: json['status'],
+      trailer_url: json['trailer_url']
     );
   }
 }
@@ -69,4 +83,17 @@ class Studios {
       name: json['name']
     );
   }
+}
+class Aired{
+  String from,to;
+
+  Aired({this.from, this.to});
+
+  factory Aired.fromMap(Map<String,dynamic>json){
+    return Aired(
+      from: json['from'],
+      to: json['to']
+    );
+  }
+
 }

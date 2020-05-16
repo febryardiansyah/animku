@@ -139,35 +139,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ],
     );
   }
-//  Widget _details() {
-//    ScreenUtil.init(context);
-//    return Align(
-//      alignment: Alignment.bottomCenter,
-//      child: ClipRRect(
-//        borderRadius: BorderRadius.only(
-//            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-//        child: Container(
-//          alignment: Alignment.bottomCenter,
-//          height: 1300.h,
-//          decoration: BoxDecoration(color: BaseColor.white, boxShadow: [
-//            BoxShadow(
-//                color: Colors.black, offset: Offset(-10, -10), blurRadius: 8),
-//          ]),
-//          child: Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: ListView(
-//              children: <Widget>[
-//                _title(),
-////                _genre(),
-//                _box1(),
-//                _box2()
-//              ],
-//            ),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
   Widget _title() {
     return Center(
       child: Text(
@@ -325,6 +296,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
   Widget _box2() {
+    ScreenUtil.init(context);
     var formatNumber = new NumberFormat('#,###');
     String studio;
     for (int i = 0; i < widget.studio.length; i++) {
@@ -361,7 +333,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             '${widget.members == null ? '' : formatNumber.format(widget.members)}',
                         icon: Icons.people),
                     SizedBox(
-                      height: 30,
+                      height: 100.h,
                     ),
                     Text(
                       'Synopsis',
