@@ -11,9 +11,9 @@ if you want to contribute on this project, you can fork this project and pull re
 - [x] drawer and items
 - [x] anime detail
 - [x] schedule
-- [ ] search anime
-- [ ] top anime
-- [ ] splash screen
+- [x] search anime
+- [x] top anime
+- [x] splash screen
 - [ ] icon launcher
 
 ## Build Setup
