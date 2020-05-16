@@ -5,6 +5,7 @@ import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/environments/my_variable.dart';
 import 'package:animku/models/current_season_model.dart';
 import 'package:animku/ui/detailscreen/details_screen.dart';
+import 'package:animku/ui/detailscreen/second_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -93,19 +94,7 @@ class _MyListState extends State<MyList> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DetailsScreen(
-                                          title: widget.animeList[i].title,
-                                          imageUrl: widget.animeList[i].imageUrl,
-                                          genre: genList,
-                                          episodes: widget.animeList[i].episodes,
-                                          score: widget.animeList[i].score,
-                                          members: widget.animeList[i].members,
-                                          airing: widget.animeList[i].airingStart,
-                                          source: widget.animeList[i].source,
-                                          studio: studioList,
-                                          synopsis: widget.animeList[i].synopsis,
-                                          type: widget.animeList[i].type,
-                                        )));
+                                    builder: (context) => SecondDetail(malId: widget.animeList[i].malId,)));
                           },
                           child: Container(
                             child: Stack(

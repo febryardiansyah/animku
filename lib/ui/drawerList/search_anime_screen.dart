@@ -19,8 +19,8 @@ class SearchAnimeScreen extends StatefulWidget {
 
 class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
   TextEditingController textCtrl = TextEditingController();
-  var res;
   bool isLoading = false;
+  var temp;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,15 +42,7 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
           IconButton(
             icon: Icon(Icons.arrow_forward_ios),
             onPressed: (){
-              print(textCtrl.text);
-              Provider.of<SearchAnimeProvider>(context,listen: false).getSearchAnime(textCtrl.text).then((f){
-                res = f;
-                if(!res){
-                  isLoading = true;
-                }else{
-                  isLoading = false;
-                }
-              });
+              Provider.of<SearchAnimeProvider>(context,listen: false).getSearchAnime(textCtrl.text);
               FocusScope.of(context).requestFocus(FocusNode());
             },
           ),
@@ -106,3 +98,26 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
     );
   }
 }
+class LoadedList extends StatelessWidget {
+  TextEditingController text;
+
+  LoadedList({this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of<SearchAnimeProvider>(context,listen: false).getSearchAnime(text.text),
+      builder: (context,snapshot){
+        if (snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: Text('Loading'),);
+        }
+        return Consumer<DetailByIdProvider>(
+          builder: (context,data,_){
+            return Text(data.searchListDetail.title);
+          },
+        );
+      },
+    );
+  }
+}
+

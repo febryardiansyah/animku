@@ -43,7 +43,7 @@ class _SecondDetailState extends State<SecondDetail> {
       text: TextSpan(
         text: name,style: TextStyle(color: BaseColor.grey),
         children: [
-          TextSpan(text: ' :\t ${value}',style: TextStyle(color: BaseColor.baseColor))
+          TextSpan(text: ' :\t ${value == null?' ':value}',style: TextStyle(color: BaseColor.baseColor))
         ]
       ),
     );
@@ -65,22 +65,25 @@ class _SecondDetailState extends State<SecondDetail> {
                 onTap: (){
                   showDialog(context: (context),
                   builder: (BuildContext context){
+                    String studios;
+                    data.searchListDetail.studio.forEach((res){
+                      studios = res.name;
+                    });
                     return AlertDialog(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         title: Text('Information',style: TextStyle(color: BaseColor.baseColor,
                         fontFamily: MyFonts.baloo,fontSize: 30),),
-                        content: Container(
-                          height: 700.h,
+                        content: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               alertDialogItems(name: 'Type',value: data.searchListDetail.type.toString()),
                               alertDialogItems(name: 'Episodes',value: data.searchListDetail.episodes.toString()),
                               alertDialogItems(name: 'Status',value: data.searchListDetail.status),
-                              alertDialogItems(name: 'Studios',value: data.searchListDetail.studio[0].name),
+                              alertDialogItems(name: 'Studios',value: studios),
                               alertDialogItems(name: 'Source',value: data.searchListDetail.source),
                               alertDialogItems(name: 'Duration',value: data.searchListDetail.duration),
                               alertDialogItems(name: 'Opening Theme',value: data.searchListDetail.opening_themes),
@@ -117,9 +120,9 @@ class _SecondDetailState extends State<SecondDetail> {
               ),
               GestureDetector(
                 onTap: (){
-                  _launchUrl(data.searchListDetail.trailer_url);
+//                  _launchUrl(data.searchListDetail.trailer_url);
                   print(data.searchListDetail.trailer_url);
-//                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubeWebView(url: data.searchListDetail.trailer_url,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubeWebView(url: data.searchListDetail.trailer_url,)));
                 },
                 child: Card(
                     child: ClipRRect(
@@ -248,7 +251,7 @@ class _SecondDetailState extends State<SecondDetail> {
         width: 210,
         child: Center(
           child: Text(
-            title,
+            title==null?'':title,
             textAlign: TextAlign.left,
             style: TextStyle(
                 fontFamily: MyFonts.baloo,
@@ -336,7 +339,7 @@ class _SecondDetailState extends State<SecondDetail> {
                           alignment: Alignment.center,
                           width: 100,
                           child: Text(
-                            genre.genreList[i].name + ' ',
+                            genre.genreList[i].name ==null?'':genre.genreList[i].name+ ' ',
                             style: TextStyle(
                                 color: BaseColor.white,
                                 fontFamily: MyFonts.baloo),
@@ -378,7 +381,7 @@ class _SecondDetailState extends State<SecondDetail> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                Text(searchList.score.toString(),style: TextStyle(
+                Text(searchList.score.toString() == null?'':searchList.score.toString(),style: TextStyle(
                   fontSize: 40,fontFamily: MyFonts.baloo,color: BaseColor.white
                 ),),
                 Text('Score',style: TextStyle(
@@ -412,7 +415,7 @@ class _SecondDetailState extends State<SecondDetail> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Text(item.toString(),style: TextStyle(
+        Text(item.toString()==null?'':item.toString(),style: TextStyle(
           fontSize: 35,fontFamily: MyFonts.baloo,color: BaseColor.white
         ),),
         Text(name,style: TextStyle(
@@ -429,7 +432,7 @@ class _SecondDetailState extends State<SecondDetail> {
         children: <Widget>[
           Text('Synopsis',style: TextStyle(color: BaseColor.orange,fontFamily: MyFonts.baloo,
           fontSize: 20),),
-          Text(item,textAlign: TextAlign.justify,)
+          Text(item==null?'':item,textAlign: TextAlign.justify,)
         ],
       ),
     );

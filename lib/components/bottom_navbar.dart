@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
@@ -63,11 +64,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       body: _children[currentIndex],
       bottomNavigationBar: AnimatedContainer(
         duration: Duration(milliseconds:500),
-        height: bottomBarVisible?60:0,
+        height: bottomBarVisible?150.h:0,
         child: !bottomBarVisible?Container():BottomNavyBar(
           selectedIndex: currentIndex,
           onItemSelected: onTapTapped,

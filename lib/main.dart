@@ -18,6 +18,7 @@ import 'package:animku/repository/schedule_repo.dart';
 import 'package:animku/repository/search_anime_repo.dart';
 import 'package:animku/repository/season_later_repo.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
+import 'package:animku/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,12 +37,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              SpringBloc(CurrSeasonImp()),
+          create: (context) => SpringBloc(CurrSeasonImp()),
         ),
         BlocProvider(
-          create: (context) =>
-              WinterBloc(CurrSeasonImp()),
+          create: (context) => WinterBloc(CurrSeasonImp()),
         ),
         BlocProvider(
           create: (context) => SummerBloc(CurrSeasonImp()),
@@ -50,7 +49,8 @@ class MyApp extends StatelessWidget {
           create: (context) => FallBloc(CurrSeasonImp()),
         ),
         BlocProvider(
-          create: (context) => SeasonLaterBloc(seasonLaterRepository: SeasonLaterImplements()),
+          create: (context) =>
+              SeasonLaterBloc(seasonLaterRepository: SeasonLaterImplements()),
         ),
         BlocProvider(
           create: (context) => SundayBloc(ScheduleRepoImplement()),
@@ -87,15 +87,11 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            body: CurrentSeasonScreen(),
-          ),
-//        initialRoute: '/',
-//        routes: {
-//          '/':(_) => SplashScreen(),
-//          '/botNavBar':(_) => BottomNavBar(),
-//        },
+          initialRoute: '/',
+          routes: {
+            '/': (_) => SplashScreen(),
+            '/botNavBar': (_) => CurrentSeasonScreen(),
+          },
         ),
       ),
     );
