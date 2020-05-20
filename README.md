@@ -48,5 +48,21 @@ $ flutter build apk
 Thanks to JikanApi Team that has been provided myanimlist.net api for public
 You can read the docs [here](https://jikan.docs.apiary.io/)
 
+Dependencies that I use :
+- provider: ^4.0.5
+- http: ^0.12.0+4
+- font_awesome_flutter: ^8.8.1
+- flutter_screenutil: ^1.1.0
+- line_awesome_icons: ^1.0.4+2
+- bottom_navy_bar: ^5.4.0
+- flutter_spinkit: ^4.1.2+1
+- flutter_bloc: ^4.0.0
+- equatable: ^1.1.1
+- intl: ^0.16.1
+- cached_network_image: ^2.1.0+1
+- rxdart: ^0.23.1
+- url_launcher: ^5.4.7
+- webview_flutter: ^0.3.21
+
 
 For detailed explanation on how things work, check out [Flutter docs](https://flutter.dev/docs).
