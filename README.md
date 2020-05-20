@@ -5,16 +5,24 @@ Animku is unofficial [myanimelist.net](https://myanimelist.net) application that
 if you want to contribute on this project, you can fork this project and pull request.
 
 
-## TODO
+## Features
 
-- [x] current season screen
-- [x] drawer and items
+- [x] season schedule
 - [x] anime detail
-- [x] schedule
-- [x] search anime
-- [x] top anime
-- [x] splash screen
-- [ ] icon launcher
+- [x] anime schedule (sunday - saturday)
+- [x] canceled anime (season later)
+- [x] search anime by name
+
+## Download Apk
+> [animku.apk](https://github.com/febryardiansyah/animku/releases/tag/0.1)
+
+## Download IOS
+> _Coming soon_
+
+## ScreenShoot
+<img src="assets/ss/ss1.png" width="30%"> <img src="assets/ss/ss2.png" width="30%">
+<img src="assets/ss/ss3.png" width="30%"> <img src="assets/ss/ss4.png" width="30%">
+<img src="assets/ss/ss5.png" width="30%">
 
 ## Build Setup
 ``` bash
@@ -35,5 +43,10 @@ $ flutter build appbundle
 $ flutter build apk
 
 ```
+
+## Special Thanks
+Thanks to JikanApi Team that has been provided myanimlist.net api for public
+You can read the docs [here](https://jikan.docs.apiary.io/)
+
 
 For detailed explanation on how things work, check out [Flutter docs](https://flutter.dev/docs).

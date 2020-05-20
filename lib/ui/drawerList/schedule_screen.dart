@@ -7,8 +7,10 @@ import 'package:animku/bloc/schedule_bloc/thursday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/tuesday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/wednesday_bloc.dart';
 import 'package:animku/components/my_app_bar.dart';
+import 'package:animku/components/my_drawer.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
+import 'package:animku/environments/my_fonts.dart';
 import 'package:animku/ui/scheduleScreen/friday_screen.dart';
 import 'package:animku/ui/scheduleScreen/monday_screen.dart';
 import 'package:animku/ui/scheduleScreen/saturday_screen.dart';
@@ -48,66 +50,55 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MySecondAppBar(
-      onRefresh: () {
-        _init_();
-      },
-      body: SingleChildScrollView(
-        child: DefaultTabController(
-            length: 7,
-            initialIndex: currentDayFn(),
-            child: Column(
-              children: [
-                Material(
-                  color: BaseColor.baseColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TabBar(
-                      controller: tabController,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      unselectedLabelColor: Colors.white,
-                      isScrollable: true,
-                      labelColor: BaseColor.white,
-                      indicatorColor: BaseColor.white,
-                      indicator: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            BaseColor.purpleToBlue,
-                            BaseColor.greyPurple
-                          ]),
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.redAccent),
-                      tabs: [
-                        Tab(
-                          text: Dictionary.sunday,
-                        ),
-                        Tab(text: Dictionary.monday),
-                        Tab(text: Dictionary.tuesday),
-                        Tab(text: Dictionary.wednesday),
-                        Tab(text: Dictionary.thursday),
-                        Tab(text: Dictionary.friday),
-                        Tab(text: Dictionary.saturday),
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      padding: EdgeInsets.only(bottom: 140),
-                      child: TabBarView(
-                        children: [
-                          SundayScreen(),
-                          MondayScreen(),
-                          TuesdayScreen(),
-                          WednesdayScreen(),
-                          ThursdayScreen(),
-                          FridayScreen(),
-                          SaturdayScreen(),
-                        ],
-                      )),
-                )
-              ],
-            )),
+    return DefaultTabController(
+      length: 7,
+      initialIndex: currentDayFn(),
+      child: Scaffold(
+        backgroundColor: BaseColor.baseColor,
+        appBar: AppBar(
+          title: Text(Dictionary.appName,style: TextStyle(fontFamily: MyFonts.horizon,fontSize: 30),),
+          centerTitle: true,
+          backgroundColor: BaseColor.baseColor,
+          elevation: 0,
+          bottom: TabBar(
+            controller: tabController,
+            indicatorSize: TabBarIndicatorSize.tab,
+            unselectedLabelColor: Colors.white,
+            isScrollable: true,
+            labelColor: BaseColor.white,
+            indicatorColor: BaseColor.white,
+            indicator: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  BaseColor.purpleToBlue,
+                  BaseColor.greyPurple
+                ]),
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.redAccent),
+            tabs: [
+              Tab(
+                text: Dictionary.sunday,
+              ),
+              Tab(text: Dictionary.monday),
+              Tab(text: Dictionary.tuesday),
+              Tab(text: Dictionary.wednesday),
+              Tab(text: Dictionary.thursday),
+              Tab(text: Dictionary.friday),
+              Tab(text: Dictionary.saturday),
+            ],
+          ),
+        ),
+        drawer: MyDrawer(),
+        body: TabBarView(
+          children: [
+            SundayScreen(),
+            MondayScreen(),
+            TuesdayScreen(),
+            WednesdayScreen(),
+            ThursdayScreen(),
+            FridayScreen(),
+            SaturdayScreen(),
+          ],
+        ),
       ),
     );
   }

@@ -31,13 +31,6 @@ class _SecondDetailState extends State<SecondDetail> {
     Provider.of<DetailByIdProvider>(context, listen: false)
         .getDetailById(widget.malId);
   }
-  _launchUrl(url)async{
-    if(await canLaunch(url)){
-      await launch(url);
-    }else{
-      throw 'Could not launch $url';
-    }
-  }
   Widget alertDialogItems({name,value}){
     return RichText(
       text: TextSpan(
@@ -184,7 +177,7 @@ class _SecondDetailState extends State<SecondDetail> {
   Widget backButton() {
     ScreenUtil.init(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 50.h),
+      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 70.h),
       child: RaisedButton(
         elevation: 8,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -207,7 +200,7 @@ class _SecondDetailState extends State<SecondDetail> {
         height: 1200.h,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30)),
             color: BaseColor.white,
             boxShadow: [
               BoxShadow(
@@ -224,8 +217,8 @@ class _SecondDetailState extends State<SecondDetail> {
       left: 70.w,
       top: 380.h,
       child: Container(
-        height: 180,
-        width: 140,
+        height: 500.h,
+        width: 350.w,
         decoration: BoxDecoration(
           color: BaseColor.white,
           borderRadius: BorderRadius.circular(8),
@@ -264,7 +257,7 @@ class _SecondDetailState extends State<SecondDetail> {
   Widget _genre({SearchList genre}) {
     ScreenUtil.init(context);
     return Padding(
-      padding: EdgeInsets.only(top:900.h),
+      padding: EdgeInsets.only(top:950.h),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,7 +356,7 @@ class _SecondDetailState extends State<SecondDetail> {
     );
   }
   Widget _boxScore(SearchList searchList){
-    var formatNumber = NumberFormat.compactCurrency(decimalDigits: 2,symbol: '');
+    var formatNumber = NumberFormat.compactCurrency(decimalDigits: 0,symbol: '');
     ScreenUtil.init(context);
     return Card(
       shape: RoundedRectangleBorder(
@@ -376,37 +369,44 @@ class _SecondDetailState extends State<SecondDetail> {
         height: 350.h,
         width: 1000.w,
         padding: EdgeInsets.all(8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text(searchList.score.toString() == null?'':searchList.score.toString(),style: TextStyle(
-                  fontSize: 40,fontFamily: MyFonts.baloo,color: BaseColor.white
-                ),),
-                Text('Score',style: TextStyle(
-                  color: BaseColor.orange,fontFamily: MyFonts.baloo,fontSize: 20
-                ),),
-              ],
-            ),
-            Container(
-              width: 3,
-              height: 100,
-              color: Color(0xff818181),
-            ),
-            _rankPopuMembers(
-              name: 'Rank',
-              item: searchList.rank == null?' ':'${formatNumber.format(searchList.rank)}'
-            ),
-            _rankPopuMembers(
-              name: 'Popularity',
-              item: searchList.popularity == null? ' ': '${formatNumber.format(searchList.popularity)}'
-            ),
-            _rankPopuMembers(
-              name: 'Members',
-              item: formatNumber.format(searchList.members)
-            )
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(searchList.score.toString() == null?'':searchList.score.toString(),style: TextStyle(
+                    fontSize: 40,fontFamily: MyFonts.baloo,color: BaseColor.white
+                  ),),
+                  Text('Score',style: TextStyle(
+                    color: BaseColor.orange,fontFamily: MyFonts.baloo,fontSize: 20
+                  ),),
+                ],
+              ),
+              SizedBox(width: 10,),
+              Container(
+                width: 3,
+                height: 100,
+                color: Color(0xff818181),
+              ),
+              SizedBox(width: 20,),
+              _rankPopuMembers(
+                name: 'Rank',
+                item: searchList.rank == null?' ':'${searchList.rank<=100?searchList.rank:formatNumber.format(searchList.rank)}'
+              ),
+              SizedBox(width: 20,),
+              _rankPopuMembers(
+                name: 'Popularity',
+                item: searchList.popularity == null? ' ': '${searchList.popularity<=100?searchList.popularity:formatNumber.format(searchList.popularity)}'
+              ),
+              SizedBox(width: 20,),
+              _rankPopuMembers(
+                name: 'Members',
+                item: searchList.members ==null?'':searchList.members<=100?searchList.members:formatNumber.format(searchList.members)
+              )
+            ],
+          ),
         ),
       ),
     );

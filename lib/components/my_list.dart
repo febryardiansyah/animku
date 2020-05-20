@@ -141,7 +141,7 @@ class _MyListState extends State<MyList> {
   }
 
   Widget _background({
-    title,
+    String title,
     List<String> genre,
     score,
     episodes,
@@ -162,7 +162,7 @@ class _MyListState extends State<MyList> {
             children: <Widget>[
               Flexible(
                 child: Text(
-                  '${title}',
+                  '${title.length >=15 ? title.substring(0,15)+'..':title}',
                   style: TextStyle(
                       fontFamily: MyFonts.baloo,
                       color: BaseColor.white,

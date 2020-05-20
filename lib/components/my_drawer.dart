@@ -1,5 +1,6 @@
 import 'package:animku/environments/dictionary.dart';
 import 'package:animku/environments/my_fonts.dart';
+import 'package:animku/ui/drawerList/about_screen.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
 import 'package:animku/ui/drawerList/schedule_screen.dart';
 import 'package:animku/ui/drawerList/search_anime_screen.dart';
@@ -56,6 +57,16 @@ class MyDrawer extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => SearchAnimeScreen(),fullscreenDialog: true));
                 }
             ),
+            Divider(),
+            _drawerItems(
+              leading: Icon(FontAwesomeIcons.infoCircle),
+              text: Text('About'),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTapTabbed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
+
+              }
+            )
           ],
         ),
       ),
