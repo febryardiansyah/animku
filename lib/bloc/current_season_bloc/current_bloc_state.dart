@@ -17,21 +17,19 @@ class CurrentLoadingState extends CurrentBlocState{
 }
 
 class CurrentLoadedState extends CurrentBlocState{
+  final List<AnimeList>animeList;
 
-  List<AnimeList>animeList;
   CurrentLoadedState({@required this.animeList});
 
   @override
-  // TODO: implement props
   List<Object> get props => [animeList];
-
 }
+
 class CurrentErrorState extends CurrentBlocState{
-  String message;
+  final String message;
+
   CurrentErrorState({@required this.message});
 
   @override
-  // TODO: implement props
   List<Object> get props => [message];
-
 }

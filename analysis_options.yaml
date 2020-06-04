@@ -1,0 +1,17 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    - parameter_assignments
+
+analyzer:
+  enable-experiment:
+    - extension-methods
+  errors:
+    missing_required_param: error
+    missing_return: error
+    must_be_immutable: error
+    parameter_assignments: error
+    yield_of_invalid_type: ignore
+    # TODO remove this rule
+    return_of_invalid_type_from_closure: info

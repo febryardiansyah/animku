@@ -1,4 +1,4 @@
-class MyFonts{
-  static String baloo = 'Baloo';
-  static String horizon = 'Horizon';
+class MyFonts {
+  static const String baloo = 'Baloo';
+  static const String horizon = 'Horizon';
 }

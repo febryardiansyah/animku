@@ -3,7 +3,7 @@ import 'package:animku/models/current_season_model.dart';
 import 'package:animku/repository/schedule_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SaturdayBloc extends Bloc<ScheduleEvent,ScheduleState>{
+class SaturdayBloc extends Bloc<ScheduleEvent, ScheduleState> {
   ScheduleRepository scheduleRepository;
 
   SaturdayBloc(this.scheduleRepository);
@@ -13,16 +13,15 @@ class SaturdayBloc extends Bloc<ScheduleEvent,ScheduleState>{
   ScheduleState get initialState => ScheduleInitialState();
 
   @override
-  Stream<ScheduleState> mapEventToState(ScheduleEvent event) async*{
-    if(event is FetchSchedule){
+  Stream<ScheduleState> mapEventToState(ScheduleEvent event) async* {
+    if (event is FetchSchedule) {
       yield ScheduleInitialState();
-      try{
-        List<AnimeList> list = await scheduleRepository.getSaturday();
+      try {
+        final List<AnimeList> list = await scheduleRepository.getSaturday();
         yield ScheduleLoadedState(animeList: list);
-      }catch(e){
+      } catch (e) {
         yield ScheduleErrorState(message: e.toString());
       }
     }
   }
-
 }

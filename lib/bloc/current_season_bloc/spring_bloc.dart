@@ -19,7 +19,7 @@ class SpringBloc extends Bloc<CurrentEvent,CurrentBlocState>{
     if(event is FetchCurrentEvent){
       yield CurrentLoadingState();
       try{
-        List<AnimeList> animeList = await currentSeasonRepository.getSpring2020();
+        final List<AnimeList> animeList = await currentSeasonRepository.getSpring2020();
         yield CurrentLoadedState(animeList: animeList);
       }catch(e){
         yield CurrentErrorState(message: e.toString());

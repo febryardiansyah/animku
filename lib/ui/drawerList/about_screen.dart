@@ -20,57 +20,63 @@ class AboutScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         child: Container(
-          height: 200.h,
+          height: 200.h as double,
           color: BaseColor.baseColor,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _iconbtn(icon: FontAwesomeIcons.instagram, onPressed: () {
-                launch('https://www.instagram.com/febry_ardiansyah24/');
-              }),
-              _iconbtn(icon: FontAwesomeIcons.github, onPressed: () {
-                launch('https://github.com/febryardiansyah');
-              }),
-              _iconbtn(icon: FontAwesomeIcons.youtube, onPressed: () {
-                launch('https://www.youtube.com/muhammadfebry');
-              }),
-              _iconbtn(icon: FontAwesomeIcons.firefoxBrowser, onPressed: () {
-                launch('https://febryardiansyah.github.io/');
-              }),
+              _iconbtn(
+                  icon: FontAwesomeIcons.instagram,
+                  onPressed: () {
+                    launch('https://www.instagram.com/febry_ardiansyah24/');
+                  }),
+              _iconbtn(
+                  icon: FontAwesomeIcons.github,
+                  onPressed: () {
+                    launch('https://github.com/febryardiansyah');
+                  }),
+              _iconbtn(
+                  icon: FontAwesomeIcons.youtube,
+                  onPressed: () {
+                    launch('https://www.youtube.com/muhammadfebry');
+                  }),
+              _iconbtn(
+                  icon: FontAwesomeIcons.firefoxBrowser,
+                  onPressed: () {
+                    launch('https://febryardiansyah.github.io/');
+                  }),
             ],
           ),
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         children: [
           Text(
             'About Developer',
             style: TextStyle(color: BaseColor.grey),
           ),
-          Divider(),
+          const Divider(),
           _aboutDeveloper(context),
-          SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Text(
             'About this App',
             style: TextStyle(color: BaseColor.grey),
           ),
-          Divider(),
+          const Divider(),
           _aboutApp(context),
         ],
       ),
     );
   }
 
-  Widget _iconbtn({onPressed, icon}) {
+  Widget _iconbtn({VoidCallback onPressed, IconData icon}) {
     return IconButton(
       onPressed: onPressed,
       icon: Icon(
@@ -86,19 +92,17 @@ class AboutScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundImage: AssetImage(Dictionary.me),
-          radius: 150.h,
+          radius: 150.h as double,
           backgroundColor: BaseColor.grey,
         ),
-        SizedBox(
-          width: 20,
-        ),
+        const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Febry Ardiansyah',
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 20,
                   fontFamily: MyFonts.baloo,
                   color: BaseColor.baseColor),
             ),
@@ -110,19 +114,20 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
-  Widget undeName({icon, name}) {
+  Widget undeName({IconData icon, String name}) {
     return Row(
       children: [
         Icon(
           icon,
           color: BaseColor.grey,
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           name,
-          style: TextStyle(color: BaseColor.grey),
+          style: TextStyle(
+            color: BaseColor.grey,
+            fontSize: 12.5,
+          ),
         ),
       ],
     );
@@ -133,16 +138,20 @@ class AboutScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(DetailsApp.details,textAlign: TextAlign.justify,style: TextStyle(
-          color: BaseColor.baseColor
-        ),),
-        SizedBox(height: 10,),
-        Text(DetailsApp.thanks,textAlign: TextAlign.center,style: TextStyle(
-            color: BaseColor.baseColor
-        ),),
-        SizedBox(height: 10,),
+        Text(
+          DetailsApp.details,
+          textAlign: TextAlign.justify,
+          style: TextStyle(color: BaseColor.baseColor),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          DetailsApp.thanks,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: BaseColor.baseColor),
+        ),
+        const SizedBox(height: 10),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             launch('https://jikan.docs.apiary.io/');
           },
           child: RichText(
@@ -151,8 +160,14 @@ class AboutScreen extends StatelessWidget {
               style: TextStyle(color: BaseColor.baseColor),
               text: DetailsApp.readDocs,
               children: [
-                TextSpan(text: ' Here',style: TextStyle(color: Colors.red,fontStyle: FontStyle.italic,))
-              ]
+                TextSpan(
+                  text: ' Here',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
             ),
           ),
         )
@@ -162,10 +177,11 @@ class AboutScreen extends StatelessWidget {
 }
 
 class DetailsApp {
-  static String details =
+  static const String details =
       'Animku is Unofficial MyAnimelist.net Application that has many '
       'features such as Schedule every season in current year, canceled '
       'anime (season later), schedule in current season, and search anime by name.';
-  static String thanks = '~~Thanks to JikanApi team that has been provided the API or backend for public/free. ~~';
-  static String readDocs = 'You can read the api documentation ';
+  static const String thanks =
+      '~~Thanks to JikanApi team that has been provided the API or backend for public/free. ~~';
+  static const String readDocs = 'You can read the api documentation ';
 }

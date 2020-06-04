@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+
 import 'package:animku/bloc/schedule_bloc/friday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/monday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/saturday_bloc.dart';
@@ -6,7 +11,6 @@ import 'package:animku/bloc/schedule_bloc/sunday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/thursday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/tuesday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/wednesday_bloc.dart';
-import 'package:animku/components/my_app_bar.dart';
 import 'package:animku/components/my_drawer.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
@@ -18,10 +22,6 @@ import 'package:animku/ui/scheduleScreen/sunday_screen.dart';
 import 'package:animku/ui/scheduleScreen/thursday_screen.dart';
 import 'package:animku/ui/scheduleScreen/tuesday_screen.dart';
 import 'package:animku/ui/scheduleScreen/wednesday_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -31,28 +31,34 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   TabController tabController;
 
-  var currentDay = DateFormat('EEEEEE').format(DateTime.now());
+  String currentDay = DateFormat('EEEEEE').format(DateTime.now());
+
   @override
   void initState() {
     super.initState();
-    print(currentDay);
     initialize();
   }
 
-  void initialize()async{
-    BlocProvider.of<SundayBloc>(context)..add(FetchSchedule());
-    BlocProvider.of<MondayBloc>(context)..add(FetchSchedule());
-    BlocProvider.of<TuesDayBloc>(context)..add(FetchSchedule());
-    Future.delayed(Duration(seconds: 3),(){
-      BlocProvider.of<WednesdayBloc>(context)..add(FetchSchedule());
-      BlocProvider.of<ThursdayBloc>(context)..add(FetchSchedule());
-      Future.delayed(Duration(seconds: 2),(){
-        BlocProvider.of<FridayBloc>(context)..add(FetchSchedule());
-        BlocProvider.of<SaturdayBloc>(context)..add(FetchSchedule());
-      });
-    });
-
+  Future<void> initialize() async {
+    BlocProvider.of<SundayBloc>(context).add(FetchSchedule());
+    BlocProvider.of<MondayBloc>(context).add(FetchSchedule());
+    BlocProvider.of<TuesDayBloc>(context).add(FetchSchedule());
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        BlocProvider.of<WednesdayBloc>(context).add(FetchSchedule());
+        BlocProvider.of<ThursdayBloc>(context).add(FetchSchedule());
+        Future.delayed(
+          const Duration(seconds: 2),
+          () {
+            BlocProvider.of<FridayBloc>(context).add(FetchSchedule());
+            BlocProvider.of<SaturdayBloc>(context).add(FetchSchedule());
+          },
+        );
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -61,14 +67,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       child: Scaffold(
         backgroundColor: BaseColor.baseColor,
         appBar: AppBar(
-          title: Text(Dictionary.appName,style: TextStyle(fontFamily: MyFonts.horizon,fontSize: 30),),
+          title: Text(
+            Dictionary.appName,
+            style: TextStyle(
+              fontFamily: MyFonts.horizon,
+              fontSize: 30,
+            ),
+          ),
           centerTitle: true,
           backgroundColor: BaseColor.baseColor,
           elevation: 0,
           actions: [
             IconButton(
-             icon: Icon(Icons.refresh),
-             onPressed: () => initialize(),
+              icon: Icon(Icons.refresh),
+              onPressed: () => initialize(),
             )
           ],
           bottom: TabBar(
@@ -79,12 +91,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             labelColor: BaseColor.white,
             indicatorColor: BaseColor.white,
             indicator: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  BaseColor.purpleToBlue,
-                  BaseColor.greyPurple
-                ]),
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.redAccent),
+              gradient: LinearGradient(
+                  colors: [BaseColor.purpleToBlue, BaseColor.greyPurple]),
+              borderRadius: BorderRadius.circular(50),
+              color: Colors.redAccent,
+            ),
             tabs: [
               Tab(
                 text: Dictionary.sunday,
@@ -98,7 +109,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ],
           ),
         ),
-        drawer: MyDrawer(),
+        drawer: const MyDrawer(),
         body: TabBarView(
           children: [
             SundayScreen(),
@@ -113,8 +124,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       ),
     );
   }
-  currentDayFn() {
-    switch(currentDay){
+
+  int currentDayFn() {
+    switch (currentDay) {
       case 'Sunday':
         return 0;
         break;

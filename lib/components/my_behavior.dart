@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-class MyBehavior extends ScrollBehavior{
+class MyBehavior extends ScrollBehavior {
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
     // TODO: implement getScrollPhysics
-    return ClampingScrollPhysics();
+    return const ClampingScrollPhysics();
   }
+
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     // TODO: implement buildViewportChrome
     return child;
   }

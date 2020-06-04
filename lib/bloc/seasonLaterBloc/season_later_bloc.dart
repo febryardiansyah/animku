@@ -7,7 +7,6 @@ abstract class SeasonLaterEvent extends Equatable{}
 
 class FetchSeasonLaterEvent extends SeasonLaterEvent{
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
@@ -15,25 +14,22 @@ abstract class SeasonLaterState extends Equatable{}
 
 class SeasonLaterInitialState extends SeasonLaterState{
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 class SeasonLaterLoadedState extends SeasonLaterState{
-  List<AnimeList>animeList;
+  final List<AnimeList>animeList;
 
   SeasonLaterLoadedState({this.animeList});
 
   @override
-  // TODO: implement props
   List<Object> get props => [animeList];
 }
 class SeasonLaterErrorState extends SeasonLaterState{
-  String message;
+  final String message;
 
   SeasonLaterErrorState({this.message});
 
   @override
-  // TODO: implement props
   List<Object> get props => [message];
 }
 
@@ -43,7 +39,6 @@ class SeasonLaterBloc extends Bloc<SeasonLaterEvent,SeasonLaterState>{
   SeasonLaterBloc({this.seasonLaterRepository});
 
   @override
-  // TODO: implement initialState
   SeasonLaterState get initialState => SeasonLaterInitialState();
 
   @override
@@ -51,10 +46,10 @@ class SeasonLaterBloc extends Bloc<SeasonLaterEvent,SeasonLaterState>{
     if(event is FetchSeasonLaterEvent){
       yield SeasonLaterInitialState();
       try{
-        List<AnimeList> animeList = await seasonLaterRepository.fetchSeasonLater();
+        final List<AnimeList> animeList = await seasonLaterRepository.fetchSeasonLater();
         yield SeasonLaterLoadedState(animeList: animeList);
       }catch(e){
-        yield SeasonLaterErrorState(message: e.toString());
+        yield SeasonLaterErrorState(message: e as String);
       }
     }
   }

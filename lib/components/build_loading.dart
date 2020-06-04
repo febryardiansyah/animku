@@ -6,7 +6,9 @@ class BuildLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BaseColor.baseColor,
-      body: LinearProgressIndicator(backgroundColor: BaseColor.purpleToBlue,),
+      body: LinearProgressIndicator(
+        backgroundColor: BaseColor.purpleToBlue,
+      ),
     );
   }
 }

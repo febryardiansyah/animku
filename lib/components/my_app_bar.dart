@@ -1,4 +1,3 @@
-import 'package:animku/components/bottom_navbar.dart';
 import 'package:animku/components/my_drawer.dart';
 import 'package:animku/environments/colors.dart';
 import 'package:animku/environments/dictionary.dart';
@@ -9,16 +8,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class MyAppbar extends StatefulWidget {
   final Widget myList;
   final Widget myGrid;
-  final onRefresh;
-  bool isList;
+  final VoidCallback onRefresh;
+  final bool isList;
 
-  MyAppbar({@required this.isList, this.myList, this.myGrid, this.onRefresh});
+  const MyAppbar({
+    @required this.isList,
+    this.myList,
+    this.myGrid,
+    this.onRefresh,
+  });
 
   @override
   _MyAppbarState createState() => _MyAppbarState();
 }
 
 class _MyAppbarState extends State<MyAppbar> {
+  bool isList;
+
+  @override
+  void initState() {
+    super.initState();
+    isList = widget.isList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,18 +42,18 @@ class _MyAppbarState extends State<MyAppbar> {
             onPressed: widget.onRefresh,
           ),
           IconButton(
-            icon: widget.isList
+            icon: isList
                 ? Icon(FontAwesomeIcons.gripHorizontal)
                 : Icon(FontAwesomeIcons.thList),
             color: BaseColor.white,
             onPressed: () {
-              if (widget.isList) {
+              if (isList) {
                 setState(() {
-                  widget.isList = false;
+                  isList = false;
                 });
               } else {
                 setState(() {
-                  widget.isList = true;
+                  isList = true;
                 });
               }
             },
@@ -49,22 +61,29 @@ class _MyAppbarState extends State<MyAppbar> {
         ],
         title: Text(
           Dictionary.appName,
-          style: TextStyle(fontFamily: MyFonts.horizon, fontSize: 30),
+          style: TextStyle(
+            fontFamily: MyFonts.horizon,
+            fontSize: 30,
+          ),
         ),
         centerTitle: true,
         elevation: 0,
       ),
-      drawer: MyDrawer(),
-      body: widget.isList ? widget.myList : widget.myGrid,
+      drawer: const MyDrawer(),
+      body: isList ? widget.myList : widget.myGrid,
     );
   }
 }
 
 class MySecondAppBar extends StatefulWidget {
   final Widget body;
-  final onRefresh;
+  final VoidCallback onRefresh;
 
-  const MySecondAppBar({Key key, this.body,this.onRefresh,}) : super(key: key);
+  const MySecondAppBar({
+    Key key,
+    this.body,
+    this.onRefresh,
+  }) : super(key: key);
 
   @override
   _MySecondAppBarState createState() => _MySecondAppBarState();
@@ -89,8 +108,8 @@ class _MySecondAppBarState extends State<MySecondAppBar> {
           style: TextStyle(fontFamily: MyFonts.horizon, fontSize: 30),
         ),
       ),
-      drawer: MyDrawer(),
-      body:widget.body ,
+      drawer: const MyDrawer(),
+      body: widget.body,
     );
   }
 }

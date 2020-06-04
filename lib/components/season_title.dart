@@ -13,11 +13,18 @@ class SeasonTitle extends StatelessWidget {
     ScreenUtil.init(context);
 
     return Container(
-      height: 200.h,
-      width: 700.w,
+      height: 200.h as double,
+      width: 700.w as double,
       color: BaseColor.greyPurple,
       child: Center(
-        child: Text(judul,style: TextStyle(fontFamily: MyFonts.baloo,fontSize: 40,color: BaseColor.white),),
+        child: Text(
+          judul,
+          style: TextStyle(
+            fontFamily: MyFonts.baloo,
+            fontSize: 40,
+            color: BaseColor.white,
+          ),
+        ),
       ),
     );
   }
