@@ -12,7 +12,7 @@ class SearchAnimeProvider with ChangeNotifier{
   List<SearchModelResult> get listSearch => _listSearch;
 
   Future<List<SearchModelResult>> getSearchAnime(String param)async{
-    final response = await api.client.get('${api.baseUrl}/search/anime?q=${param}/Zero&page=1');
+    final response = await api.client.get('${api.baseUrl}/search/anime?q=$param/Zero&page=1');
 
     if(response.statusCode == 200){
       notifyListeners();

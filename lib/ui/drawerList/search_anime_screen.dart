@@ -31,6 +31,8 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
           title: TextField(
             controller: textCtrl,
             style: TextStyle(color: BaseColor.white),
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: 'Search Anime...',
               hintStyle: TextStyle(color: BaseColor.white),
@@ -98,7 +100,8 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   width: 300,
                                   child: Text(
-                                    data.listSearch[i].title,
+                                    data.listSearch[i].title.length <= 25 ?data.listSearch[i].title
+                                    :'${data.listSearch[i].title.substring(0,25)}..',
                                     style: TextStyle(
                                         fontFamily: MyFonts.baloo,
                                         fontSize: 20),
@@ -113,31 +116,5 @@ class _SearchAnimeScreenState extends State<SearchAnimeScreen> {
                   );
                 },
               ));
-  }
-}
-
-class LoadedList extends StatelessWidget {
-  TextEditingController text;
-
-  LoadedList({this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Provider.of<SearchAnimeProvider>(context, listen: false)
-          .getSearchAnime(text.text),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Text('Loading'),
-          );
-        }
-        return Consumer<DetailByIdProvider>(
-          builder: (context, data, _) {
-            return Text(data.searchListDetail.title);
-          },
-        );
-      },
-    );
   }
 }

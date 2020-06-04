@@ -19,21 +19,18 @@ class SeasonLaterScreen extends StatefulWidget {
 
 class _SeasonLaterScreenState extends State<SeasonLaterScreen> {
   SeasonLaterBloc seasonLaterBloc;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    seasonLaterBloc = BlocProvider.of<SeasonLaterBloc>(context);
-    seasonLaterBloc.add(FetchSeasonLaterEvent());
+    seasonLaterBloc = BlocProvider.of<SeasonLaterBloc>(context)..add(FetchSeasonLaterEvent());
   }
-  bool cleartext = false;
-  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MySecondAppBar(
       onRefresh: (){
-        seasonLaterBloc = BlocProvider.of<SeasonLaterBloc>(context);
-        seasonLaterBloc.add(FetchSeasonLaterEvent());
+        seasonLaterBloc = BlocProvider.of<SeasonLaterBloc>(context)..add(FetchSeasonLaterEvent());
       },
       body: Container(
         child: BlocBuilder<SeasonLaterBloc,SeasonLaterState>(

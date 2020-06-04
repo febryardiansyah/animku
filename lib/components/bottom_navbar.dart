@@ -28,7 +28,8 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int currentIndex;
+  int currentIndex = 0;
+
   List<Widget>_children = [
     WinterScreen(),
     SpringScreen(),
@@ -36,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     FallScreen()
   ];
   bool bottomBarVisible = true;
-  String formatDate = DateFormat.MMMM().format(DateTime.now());
+  String formatDate = DateFormat.MMM().format(DateTime.now());
 
   _bottomScrollListener(){
     if(MyVariable.bottomBarCtrl.position.userScrollDirection == ScrollDirection.reverse){
@@ -56,10 +57,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    checkSeasonIndex();
     print(formatDate);
+    checkSeasonIndex();
     MyVariable.bottomBarCtrl.addListener(_bottomScrollListener);
   }
   @override
@@ -98,13 +98,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   int checkSeasonIndex(){
-    if(formatDate == 'Mar' || formatDate == 'Apr' || formatDate == 'May'){
+    if(formatDate.contains('Mar') || formatDate.contains('Apr') || formatDate.contains('May')){
       return currentIndex = 1;
-    }else if(formatDate == 'Jun' || formatDate == 'Jul' || formatDate == 'Aug'){
+    }else if(formatDate.contains('Jun') || formatDate.contains('Jul') || formatDate.contains('Aug')){
       return currentIndex = 2;
-    }else if(formatDate == 'Sep' || formatDate == 'Oct' || formatDate == 'Nov'){
+    }else if(formatDate.contains('Sep') || formatDate.contains('Oct') || formatDate.contains('Nov')){
       return currentIndex = 3;
-    }else if(formatDate == 'Dec' || formatDate == 'Jan' || formatDate == 'Feb'){
+    }else{
       return currentIndex = 0;
     }
   }

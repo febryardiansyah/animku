@@ -23,7 +23,7 @@ class ScheduleRepoImplement implements ScheduleRepository{
   response(http.Response response,name){
    switch(response.statusCode){
      case 200:
-       var res = json.decode(response.body)['${name}'].map((item) => AnimeList.fromMap(item));
+       var res = json.decode(response.body)['$name'].map((item) => AnimeList.fromMap(item));
        List<AnimeList>day = List<AnimeList>.from((res));
        return day;
      case 400:

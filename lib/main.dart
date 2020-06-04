@@ -20,6 +20,7 @@ import 'package:animku/repository/season_later_repo.dart';
 import 'package:animku/ui/drawerList/current_season_screen.dart';
 import 'package:animku/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,9 @@ import 'bloc/seasonLaterBloc/season_later_bloc.dart';
 
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  .then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -73,26 +76,22 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SaturdayBloc(ScheduleRepoImplement()),
         ),
-      ],
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => SearchAnimeProvider(),
-            lazy: true,
-          ),
-          ChangeNotifierProvider(
-            create: (context) => DetailByIdProvider(),
-            lazy: true,
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          routes: {
-            '/': (_) => SplashScreen(),
-            '/botNavBar': (_) => CurrentSeasonScreen(),
-          },
+        ChangeNotifierProvider(
+          create: (context) => SearchAnimeProvider(),
+          lazy: true,
         ),
+        ChangeNotifierProvider(
+          create: (context) => DetailByIdProvider(),
+          lazy: true,
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (_) => SplashScreen(),
+          '/home': (_) => CurrentSeasonScreen(),
+        },
       ),
     );
   }

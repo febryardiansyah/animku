@@ -6,7 +6,6 @@ abstract class ScheduleEvent extends Equatable{}
 
 class FetchSchedule extends ScheduleEvent{
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
@@ -15,7 +14,6 @@ abstract class ScheduleState extends Equatable{}
 
 class ScheduleInitialState extends ScheduleState{
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 class ScheduleLoadedState extends ScheduleState{
@@ -24,7 +22,6 @@ class ScheduleLoadedState extends ScheduleState{
   ScheduleLoadedState({this.animeList});
 
   @override
-  // TODO: implement props
   List<Object> get props => [animeList];
 }
 class ScheduleErrorState extends ScheduleState{
@@ -33,6 +30,5 @@ class ScheduleErrorState extends ScheduleState{
   ScheduleErrorState({this.message});
 
   @override
-  // TODO: implement props
   List<Object> get props => [message];
 }

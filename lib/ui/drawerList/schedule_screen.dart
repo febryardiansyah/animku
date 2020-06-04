@@ -32,22 +32,27 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   TabController tabController;
 
   var currentDay = DateFormat('EEEEEE').format(DateTime.now());
-
-  SundayBloc sundayBloc;
-  MondayBloc mondayBloc;
-  TuesDayBloc tuesDayBloc;
-  WednesdayBloc wednesdayBloc;
-  ThursdayBloc thursdayBloc;
-  FridayBloc fridayBloc;
-  SaturdayBloc saturdayBloc;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(currentDay);
-    _init_();
+    initialize();
   }
 
+  void initialize()async{
+    BlocProvider.of<SundayBloc>(context)..add(FetchSchedule());
+    BlocProvider.of<MondayBloc>(context)..add(FetchSchedule());
+    BlocProvider.of<TuesDayBloc>(context)..add(FetchSchedule());
+    Future.delayed(Duration(seconds: 3),(){
+      BlocProvider.of<WednesdayBloc>(context)..add(FetchSchedule());
+      BlocProvider.of<ThursdayBloc>(context)..add(FetchSchedule());
+      Future.delayed(Duration(seconds: 2),(){
+        BlocProvider.of<FridayBloc>(context)..add(FetchSchedule());
+        BlocProvider.of<SaturdayBloc>(context)..add(FetchSchedule());
+      });
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -60,6 +65,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           centerTitle: true,
           backgroundColor: BaseColor.baseColor,
           elevation: 0,
+          actions: [
+            IconButton(
+             icon: Icon(Icons.refresh),
+             onPressed: () => initialize(),
+            )
+          ],
           bottom: TabBar(
             controller: tabController,
             indicatorSize: TabBarIndicatorSize.tab,
@@ -129,25 +140,5 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         return null;
         break;
     }
-  }
-  void _init_(){
-    sundayBloc = BlocProvider.of<SundayBloc>(context);
-    sundayBloc.add(FetchSchedule());
-    mondayBloc = BlocProvider.of<MondayBloc>(context);
-    mondayBloc.add(FetchSchedule());
-    tuesDayBloc = BlocProvider.of<TuesDayBloc>(context);
-    tuesDayBloc.add(FetchSchedule());
-    Future.delayed(Duration(seconds: 3),(){
-      wednesdayBloc = BlocProvider.of<WednesdayBloc>(context);
-      wednesdayBloc.add(FetchSchedule());
-      thursdayBloc = BlocProvider.of<ThursdayBloc>(context);
-      thursdayBloc.add(FetchSchedule());
-      fridayBloc = BlocProvider.of(context);
-      fridayBloc.add(FetchSchedule());
-      Future.delayed(Duration(seconds: 2),(){
-        saturdayBloc = BlocProvider.of<SaturdayBloc>(context);
-        saturdayBloc.add(FetchSchedule());
-      });
-    });
   }
 }
