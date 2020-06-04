@@ -8,8 +8,9 @@ class DetailByIdProvider with ChangeNotifier {
   ApiService api = ApiService();
 
   SearchList searchListDetail;
+
   Future<SearchList> getDetailById(int id) async {
-    final response = await api.client.get('${api.baseUrl}/anime/id');
+    final response = await api.client.get('${api.baseUrl}/anime/$id');
 
     if (response.statusCode == 200) {
       notifyListeners();

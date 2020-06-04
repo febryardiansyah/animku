@@ -219,7 +219,7 @@ class _SecondDetailState extends State<SecondDetail> {
                   _whitelayer(),
                   imagePic(imageUrl: data.searchListDetail.imageUrl),
                   title(title: data.searchListDetail.title),
-                  _genre(genre: data.searchListDetail),
+                  _genre(searchList: data.searchListDetail),
                 ],
               );
             },
@@ -299,8 +299,10 @@ class _SecondDetailState extends State<SecondDetail> {
               blurRadius: 8,
             ),
           ],
-          image:
-              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+          image: DecorationImage(
+            image: NetworkImage(imageUrl),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -328,7 +330,7 @@ class _SecondDetailState extends State<SecondDetail> {
     );
   }
 
-  Widget _genre({SearchList genre}) {
+  Widget _genre({SearchList searchList}) {
     ScreenUtil.init(context);
     return Padding(
       padding: EdgeInsets.only(top: 950.h as double),
@@ -344,10 +346,10 @@ class _SecondDetailState extends State<SecondDetail> {
                   scrollDirection: Axis.horizontal,
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: genre.genreList.length,
+                  itemCount: searchList.genreList.length,
                   itemBuilder: (context, i) {
                     Color colorgen() {
-                      switch (genre.genreList[i].name) {
+                      switch (searchList.genreList[i].name) {
                         case 'Adventure':
                           return BaseColor.genreColorList[0] as Color;
                           break;
@@ -407,9 +409,9 @@ class _SecondDetailState extends State<SecondDetail> {
                         alignment: Alignment.center,
                         width: 100,
                         child: Text(
-                          genre.genreList[i].name == null
+                          searchList.genreList[i].name == null
                               ? ''
-                              : '${genre.genreList[i].name} ',
+                              : '${searchList.genreList[i].name} ',
                           style: TextStyle(
                             color: BaseColor.white,
                             fontFamily: MyFonts.baloo,
@@ -424,11 +426,11 @@ class _SecondDetailState extends State<SecondDetail> {
             SizedBox(
               height: 40.h as double,
             ),
-            _boxScore(genre),
+            _boxScore(searchList),
             SizedBox(
               height: 40.h as double,
             ),
-            _synopsis(genre.synopsis)
+            _synopsis(searchList.synopsis),
           ],
         ),
       ),
@@ -456,7 +458,7 @@ class _SecondDetailState extends State<SecondDetail> {
               Column(
                 children: <Widget>[
                   Text(
-                    searchList.score.toString() ?? '',
+                    '${searchList.score ?? ''}',
                     style: TextStyle(
                       fontSize: 40,
                       fontFamily: MyFonts.baloo,

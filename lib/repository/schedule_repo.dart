@@ -40,7 +40,7 @@ class ScheduleRepoImplement implements ScheduleRepository {
   //get endpoint + object name
   Future<List<AnimeList>> get(String endpoint, String name) async {
     try {
-      final url = await api.client.get(api.baseUrl + endpoint);
+      final url = await api.client.get('${api.baseUrl}$endpoint');
       final List<AnimeList> res = response(url, name);
       return res;
     } on SocketException {

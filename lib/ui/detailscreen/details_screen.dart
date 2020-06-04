@@ -41,57 +41,58 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        _background(),
-        DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          minChildSize: 0.7,
-          maxChildSize: 0.9,
-          expand: true,
-          builder: (context, controller) {
-            return Container(
-              height: widget.synopsis.length <= 100 != null
-                  ? 500.h as double
-                  : 1300.h as double,
-              decoration: BoxDecoration(
-                color: BaseColor.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    offset: const Offset(-10, -10),
-                    blurRadius: 8,
+      body: Stack(
+        children: <Widget>[
+          _background(),
+          DraggableScrollableSheet(
+            initialChildSize: 0.7,
+            minChildSize: 0.7,
+            maxChildSize: 0.9,
+            expand: true,
+            builder: (context, controller) {
+              return Container(
+                height: widget.synopsis.length <= 100 != null
+                    ? 500.h as double
+                    : 1300.h as double,
+                decoration: BoxDecoration(
+                  color: BaseColor.white,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                ],
-              ),
-              child: ScrollConfiguration(
-                behavior: MyBehavior(),
-                child: ListView(
-                  controller: controller,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: <Widget>[
-                          _title(),
-                          _genre(),
-                          _box1(),
-                          _box2(),
-                        ],
-                      ),
-                    )
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: const Offset(-10, -10),
+                      blurRadius: 8,
+                    ),
                   ],
                 ),
-              ),
-            );
-          },
-        )
-      ],
-    ));
+                child: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView(
+                    controller: controller,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            _title(),
+                            _genre(),
+                            _box1(),
+                            _box2(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 
   Widget _background() {
