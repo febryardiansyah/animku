@@ -1,44 +1,36 @@
 import 'dart:ui';
 
-import 'package:animku/components/my_behavior.dart';
-import 'package:animku/environments/colors.dart';
-import 'package:animku/environments/my_fonts.dart';
-import 'package:animku/environments/my_variable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:expandable_card/expandable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
+
+import 'package:animku/components/my_behavior.dart';
+import 'package:animku/environments/colors.dart';
+import 'package:animku/environments/my_fonts.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final title,
-      imageUrl,
-      score,
-      type,
-      episodes,
-      source,
-      airing,
-      members,
-      synopsis;
-  final List<String>genre;
+  final String title, imageUrl, airing, type, source, synopsis;
+  final double score;
+  final int episodes, members;
+  final List<String> genre;
   final List<String> studio;
 
-  const DetailsScreen(
-      {Key key,
-      this.title,
-      this.imageUrl,
-      this.genre,
-      this.score,
-      this.type,
-      this.episodes,
-      this.source,
-      this.studio,
-      this.airing,
-      this.members,
-      this.synopsis})
-      : super(key: key);
+  const DetailsScreen({
+    Key key,
+    this.title,
+    this.imageUrl,
+    this.genre,
+    this.score,
+    this.type,
+    this.episodes,
+    this.source,
+    this.studio,
+    this.airing,
+    this.members,
+    this.synopsis,
+  }) : super(key: key);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -49,59 +41,69 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Scaffold(
-        body:Stack(
-          children: <Widget>[
-            _background(),
-            DraggableScrollableSheet(
-              initialChildSize: 0.7,
-              minChildSize: 0.7,
-              maxChildSize: 0.9,
-              expand: true,
-              builder: (context,controller){
-                return Container(
-                  height: widget.synopsis.length<=100?500.h:1300.h,
-                  child: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: ListView(
-                      controller: controller,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              _title(),
-                              _genre(),
-                              _box1(),
-                              _box2(),
-                            ],
-                          ),
-                        )
-                      ],
+      body: Stack(
+        children: <Widget>[
+          _background(),
+          DraggableScrollableSheet(
+            initialChildSize: 0.7,
+            minChildSize: 0.7,
+            maxChildSize: 0.9,
+            expand: true,
+            builder: (context, controller) {
+              return Container(
+                height: widget.synopsis.length <= 100 != null
+                    ? 500.h as double
+                    : 1300.h as double,
+                decoration: BoxDecoration(
+                  color: BaseColor.white,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: const Offset(-10, -10),
+                      blurRadius: 8,
                     ),
+                  ],
+                ),
+                child: ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView(
+                    controller: controller,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            _title(),
+                            _genre(),
+                            _box1(),
+                            _box2(),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  decoration: BoxDecoration(
-                      color: BaseColor.white,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26, offset: Offset(-10, -10), blurRadius: 8),
-                    ]
-                  ),
-                );
-              },
-            )
-          ],
-        )
+                ),
+              );
+            },
+          )
+        ],
+      ),
     );
   }
+
   Widget _background() {
     ScreenUtil.init(context);
     return Stack(
       children: <Widget>[
         CachedNetworkImage(
           imageUrl: widget.imageUrl,
-          placeholder: (context, loading) =>
-              Center(child: CircularProgressIndicator()),
+          placeholder: (context, loading) => const Center(
+            child: CircularProgressIndicator(),
+          ),
           errorWidget: (context, error, _) => Icon(Icons.error),
           imageBuilder: (context, imageProvider) => Container(
             width: MediaQuery.of(context).size.width,
@@ -127,68 +129,49 @@ class _DetailsScreenState extends State<DetailsScreen> {
             color: BaseColor.baseColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Icon(
               Icons.arrow_back_ios,
               color: BaseColor.white,
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
         )
       ],
     );
   }
+
   Widget _title() {
     return Center(
       child: Text(
         widget.title,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: BaseColor.baseColor,
-            fontFamily: MyFonts.baloo,
-            fontSize: widget.title.length >= 20 ? 20 : 30),
+          color: BaseColor.baseColor,
+          fontFamily: MyFonts.baloo,
+          fontSize: widget.title.length >= 20 != null ? 20 : 30,
+        ),
       ),
     );
   }
+
   Widget _genre() {
-    String name;
-    widget.genre.forEach((f){
-      print(f);
-    });
-    return Text(widget.genre.toString(),textAlign: TextAlign.center,);
-//    return ListView.builder(
-//      physics: ClampingScrollPhysics(),
-//      shrinkWrap: true,
-//      itemCount: widget.genre.length,
-//      scrollDirection: Axis.horizontal,
-//      itemBuilder: (context, i) {
-//        return Row(
-//          crossAxisAlignment: CrossAxisAlignment.start,
-//          children: <Widget>[
-//            Card(
-//                color: Color(0xffF25959),
-//                child: Padding(
-//                  padding: const EdgeInsets.all(8.0),
-//                  child: Text(
-//                    widget.genre[i].toString() + ' ',
-//                    style: TextStyle(color: BaseColor.white),
-//                  ),
-//                )),
-//          ],
-//        );
-//      },
-//    );
+    return Text(
+      widget.genre.toString(),
+      textAlign: TextAlign.center,
+    );
   }
+
   Widget _box1() {
     return Card(
       elevation: 8,
       color: BaseColor.baseColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Container(
-        height: 340.h,
+        height: 340.h as double,
         width: double.infinity,
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -198,8 +181,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Container(
-                    height: 100.h,
-                    width: 200.h,
+                    height: 100.h as double,
+                    width: 200.h as double,
                     color: BaseColor.white,
                     child: Center(
                       child: Text(
@@ -212,7 +195,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   children: <Widget>[
                     Icon(
@@ -223,9 +206,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Text(
                       widget.score == null ? '0' : widget.score.toString(),
                       style: TextStyle(
-                          fontSize: 30,
-                          color: BaseColor.white,
-                          fontFamily: MyFonts.baloo),
+                        fontSize: 30,
+                        color: BaseColor.white,
+                        fontFamily: MyFonts.baloo,
+                      ),
                     )
                   ],
                 )
@@ -234,7 +218,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Container(
               width: 5,
               height: 100,
-              color: Color(0xff818181),
+              color: const Color(0xff818181),
             ),
             Column(
               children: <Widget>[
@@ -266,9 +250,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Text(
                   widget.episodes == null ? '0' : widget.episodes.toString(),
                   style: TextStyle(
-                      fontSize: 25,
-                      color: BaseColor.orange,
-                      fontFamily: MyFonts.baloo),
+                    fontSize: 25,
+                    color: BaseColor.orange,
+                    fontFamily: MyFonts.baloo,
+                  ),
                 )
               ],
             ),
@@ -277,16 +262,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Text(
                   'Source',
                   style: TextStyle(
-                      fontFamily: MyFonts.baloo,
-                      fontSize: 25,
-                      color: BaseColor.white),
+                    fontFamily: MyFonts.baloo,
+                    fontSize: 25,
+                    color: BaseColor.white,
+                  ),
                 ),
                 Text(
                   widget.source.toString(),
                   style: TextStyle(
-                      fontSize: 25,
-                      color: BaseColor.orange,
-                      fontFamily: MyFonts.baloo),
+                    fontSize: 25,
+                    color: BaseColor.orange,
+                    fontFamily: MyFonts.baloo,
+                  ),
                 )
               ],
             ),
@@ -295,9 +282,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
     );
   }
+
   Widget _box2() {
     ScreenUtil.init(context);
-    var formatNumber = new NumberFormat('#,###');
+    final NumberFormat formatNumber = NumberFormat('#,###');
     String studio;
     for (int i = 0; i < widget.studio.length; i++) {
       studio = widget.studio[i];
@@ -307,33 +295,39 @@ class _DetailsScreenState extends State<DetailsScreen> {
       color: BaseColor.baseColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Container(
-        height: widget.synopsis.length<=100?1000.h:MediaQuery.of(context).size.height,
-        padding: EdgeInsets.all(8),
+        height: widget.synopsis.length <= 100 != null
+            ? 1000.h as double
+            : MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: <Widget>[
             Stack(
               children: <Widget>[
                 Container(
                   height: MediaQuery.of(context).size.height,
-                  width: 970.w,
+                  width: 970.w as double,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     _detailItems(
-                        title: widget.airing == null
-                            ? 'Unknown'
-                            : widget.airing.substring(0, 10),
-                        icon: Icons.date_range),
+                      title: widget.airing == null
+                          ? 'Unknown'
+                          : widget.airing.substring(0, 10),
+                      icon: Icons.date_range,
+                    ),
                     _detailItems(
-                        title: studio == null ? '' : studio,
-                        icon: FontAwesomeIcons.building),
+                      title: studio ?? '',
+                      icon: FontAwesomeIcons.building,
+                    ),
                     _detailItems(
-                        title:
-                            '${widget.members == null ? '' : formatNumber.format(widget.members)}',
-                        icon: Icons.people),
+                      title: widget.members == null
+                          ? ''
+                          : formatNumber.format(widget.members),
+                      icon: Icons.people,
+                    ),
                     SizedBox(
-                      height: 100.h,
+                      height: 100.h as double,
                     ),
                     Text(
                       'Synopsis',
@@ -343,39 +337,42 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           fontFamily: MyFonts.baloo),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8),
-                      width: 950.w,
+                      padding: const EdgeInsets.all(8),
+                      width: 950.w as double,
                       child: Text(
-                        '${widget.synopsis}',
+                        widget.synopsis,
                         textAlign: TextAlign.justify,
                         style: TextStyle(color: BaseColor.white),
                       ),
                     ),
-
                   ],
                 ),
                 Positioned(
-                  left: 600.w,
+                  left: 600.w as double,
                   child: CachedNetworkImage(
                     imageUrl: widget.imageUrl,
-                    errorWidget: (context,error,_)=>Text(error),
-                    placeholder: (context,url) => CircularProgressIndicator(),
-                    imageBuilder: (context,imageProvider)=>
-                    Container(
-                      height: 430.h,
-                      width: 350.h,
+                    errorWidget: (context, error, _) => Text(error),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: 430.h as double,
+                      width: 350.h as double,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
                         boxShadow: [
                           BoxShadow(
-                            offset: Offset(5, 5),
+                            offset: const Offset(5, 5),
                             color: Colors.black12,
                           ),
-                          BoxShadow(offset: Offset(-5, -5), color: Colors.black12)
+                          BoxShadow(
+                            offset: const Offset(-5, -5),
+                            color: Colors.black12,
+                          )
                         ],
                         image: DecorationImage(
                           image: imageProvider,
-                          fit: BoxFit.cover
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -388,7 +385,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
     );
   }
-  _detailItems({icon, title}) {
+
+  Row _detailItems({IconData icon, String title}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -396,11 +394,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
           icon,
           color: BaseColor.white,
         ),
-        Text(' '),
+        const Text(' '),
         Text(
           title,
           style: TextStyle(
-              color: BaseColor.white, fontFamily: MyFonts.baloo, fontSize: 20),
+            color: BaseColor.white,
+            fontFamily: MyFonts.baloo,
+            fontSize: 20,
+          ),
         )
       ],
     );

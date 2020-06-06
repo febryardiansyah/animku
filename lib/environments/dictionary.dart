@@ -1,39 +1,38 @@
-class Dictionary{
+class Dictionary {
   //bar
-  static String appName = 'Animku';
-  static String winter2020 = 'Winter 2020';
-  static String spring2020 = 'Spring 2020';
-  static String summer2020 = 'Summer 2020';
-  static String fall2020 = 'Fall 2020';
+  static const String appName = 'Animku';
+  static const String winter2020 = 'Winter 2020';
+  static const String spring2020 = 'Spring 2020';
+  static const String summer2020 = 'Summer 2020';
+  static const String fall2020 = 'Fall 2020';
 
-  static String winter = 'Winter';
-  static String spring = 'Spring';
-  static String summer = 'Summer';
-  static String fall = 'Fall';
+  static const String winter = 'Winter';
+  static const String spring = 'Spring';
+  static const String summer = 'Summer';
+  static const String fall = 'Fall';
 
   //drawer items
-  static String currentSeason = 'Current Season';
-  static String seasonLater = 'Season Later';
-  static String archive = 'Archive';
-  static String schedule = 'Schedule';
+  static const String currentSeason = 'Current Season';
+  static const String seasonLater = 'Season Later';
+  static const String archive = 'Archive';
+  static const String schedule = 'Schedule';
 
   //anime details
-  static String score = 'Score';
-  static String type = 'Type';
-  static String episodes = 'Episodes';
-  static String source = 'Source';
-  static String synopsis = 'Synopsis';
+  static const String score = 'Score';
+  static const String type = 'Type';
+  static const String episodes = 'Episodes';
+  static const String source = 'Source';
+  static const String synopsis = 'Synopsis';
 
   //schedule dropdown
-  static String sunday = 'Sunday';
-  static String monday = 'Monday';
-  static String tuesday = 'Tuesday';
-  static String wednesday = 'Wednesday';
-  static String thursday = 'Thursday';
-  static String friday = 'Friday';
-  static String saturday = 'Saturday';
+  static const String sunday = 'Sunday';
+  static const String monday = 'Monday';
+  static const String tuesday = 'Tuesday';
+  static const String wednesday = 'Wednesday';
+  static const String thursday = 'Thursday';
+  static const String friday = 'Friday';
+  static const String saturday = 'Saturday';
 
-  static String tenkinokowp = 'assets/images/tenkinokowp.png';
-  static String me = 'assets/images/aqua.JPG';
-
+  static const String tenkinokowp = 'assets/images/tenkinokowp.png';
+  static const String me = 'assets/images/aqua.JPG';
 }

@@ -21,63 +21,59 @@ class _WinterScreenState extends State<WinterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WinterBloc,CurrentBlocState>(
-      listener: (context,state){
-        if(state is CurrentErrorState){
+    return BlocListener<WinterBloc, CurrentBlocState>(
+      listener: (context, state) {
+        if (state is CurrentErrorState) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-            )
+            ),
           );
         }
       },
       child: MyAppbar(
-        onRefresh: (){
+        onRefresh: () {
           winterBloc = BlocProvider.of<WinterBloc>(context);
           winterBloc.add(FetchCurrentEvent());
         },
         isList: MyVariable.isList,
-        myList: Container(
-          child: BlocBuilder<WinterBloc, CurrentBlocState>(
-            builder: (context, state) {
-              if (state is CurrentInitialState) {
-                return BuildLoading();
-              } else if (state is CurrentLoadingState) {
-                return BuildLoading();
-              } else if (state is CurrentLoadedState) {
-                return MyList(
-                  animeList: state.animeList,
-                  seasonTitle: Dictionary.winter2020,
-                );
-              } else if (state is CurrentErrorState) {
-                return BuildError(
-                  errorMsg: state.message,
-                );
-              }
-              return null;
-            },
-          ),
+        myList: BlocBuilder<WinterBloc, CurrentBlocState>(
+          builder: (context, state) {
+            if (state is CurrentInitialState) {
+              return BuildLoading();
+            } else if (state is CurrentLoadingState) {
+              return BuildLoading();
+            } else if (state is CurrentLoadedState) {
+              return MyList(
+                animeList: state.animeList,
+                seasonTitle: Dictionary.winter2020,
+              );
+            } else if (state is CurrentErrorState) {
+              return BuildError(
+                errorMsg: state.message,
+              );
+            }
+            return null;
+          },
         ),
-        myGrid: Container(
-          child: BlocBuilder<WinterBloc, CurrentBlocState>(
-            builder: (context, state) {
-              if (state is CurrentInitialState) {
-                return BuildLoading();
-              } else if (state is CurrentLoadingState) {
-                return BuildLoading();
-              } else if (state is CurrentLoadedState) {
-                return MyGrid(
-                  animeList: state.animeList,
-                  judul: Dictionary.winter2020,
-                );
-              } else if (state is CurrentErrorState) {
-                return BuildError(
-                  errorMsg: state.message,
-                );
-              }
-              return null;
-            },
-          ),
+        myGrid: BlocBuilder<WinterBloc, CurrentBlocState>(
+          builder: (context, state) {
+            if (state is CurrentInitialState) {
+              return BuildLoading();
+            } else if (state is CurrentLoadingState) {
+              return BuildLoading();
+            } else if (state is CurrentLoadedState) {
+              return MyGrid(
+                animeList: state.animeList,
+                judul: Dictionary.winter2020,
+              );
+            } else if (state is CurrentErrorState) {
+              return BuildError(
+                errorMsg: state.message,
+              );
+            }
+            return null;
+          },
         ),
       ),
     );

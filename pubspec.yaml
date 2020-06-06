@@ -14,9 +14,10 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
+  after_layout: ^1.0.7+2
   provider: ^4.0.5
   http: ^0.12.0+4
   font_awesome_flutter: ^8.8.1
@@ -45,6 +46,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.5
   flutter_test:
     sdk: flutter
+  lint: ^1.2.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -56,7 +58,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -80,13 +81,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Baloo
-       fonts:
-         - asset: assets/fonts/BalooPaaji2-Bold.ttf
+    - family: Baloo
+      fonts:
+        - asset: assets/fonts/BalooPaaji2-Bold.ttf
 
-     - family: Horizon
-       fonts:
-         - asset: assets/fonts/Horizon.otf
+    - family: Horizon
+      fonts:
+        - asset: assets/fonts/Horizon.otf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

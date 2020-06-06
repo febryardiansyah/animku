@@ -4,7 +4,7 @@ import 'package:animku/models/current_season_model.dart';
 import 'package:animku/repository/current_season_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WinterBloc extends Bloc<CurrentEvent,CurrentBlocState>{
+class WinterBloc extends Bloc<CurrentEvent, CurrentBlocState> {
   CurrentSeasonRepository currentSeasonRepository;
 
   WinterBloc(this.currentSeasonRepository);
@@ -14,17 +14,17 @@ class WinterBloc extends Bloc<CurrentEvent,CurrentBlocState>{
   CurrentBlocState get initialState => CurrentInitialState();
 
   @override
-  Stream<CurrentBlocState> mapEventToState(CurrentEvent event)async* {
+  Stream<CurrentBlocState> mapEventToState(CurrentEvent event) async* {
     // TODO: implement mapEventToState
-    if(event is FetchCurrentEvent){
+    if (event is FetchCurrentEvent) {
       yield CurrentLoadingState();
-      try{
-        List<AnimeList>animeList = await currentSeasonRepository.getWinter2020();
+      try {
+        final List<AnimeList> animeList =
+            await currentSeasonRepository.getWinter2020();
         yield CurrentLoadedState(animeList: animeList);
-      }catch(e){
+      } catch (e) {
         yield CurrentErrorState(message: e.toString());
       }
     }
   }
-
 }

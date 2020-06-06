@@ -15,17 +15,19 @@ class FridayScreen extends StatefulWidget {
 class _FridayScreenState extends State<FridayScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FridayBloc,ScheduleState>(
-      builder: (context,state){
-        if(state is ScheduleInitialState){
+    return BlocBuilder<FridayBloc, ScheduleState>(
+      builder: (context, state) {
+        if (state is ScheduleInitialState) {
           return BuildLoading();
-        }else if(state is ScheduleLoadedState){
+        } else if (state is ScheduleLoadedState) {
           return MyGrid(
             animeList: state.animeList,
             judul: Dictionary.friday,
           );
-        }else if(state is ScheduleErrorState){
-          return BuildError(errorMsg: state.message,);
+        } else if (state is ScheduleErrorState) {
+          return BuildError(
+            errorMsg: state.message,
+          );
         }
         return null;
       },

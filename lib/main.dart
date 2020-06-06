@@ -5,13 +5,13 @@ import 'package:animku/bloc/current_season_bloc/winter_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/friday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/monday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/saturday_bloc.dart';
-import 'package:animku/bloc/schedule_bloc/shedule_event_state.dart';
+
 import 'package:animku/bloc/schedule_bloc/sunday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/thursday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/tuesday_bloc.dart';
 import 'package:animku/bloc/schedule_bloc/wednesday_bloc.dart';
 import 'package:animku/bloc/simple_bloc_delegate.dart';
-import 'package:animku/components/bottom_navbar.dart';
+
 import 'package:animku/repository/current_season_repo.dart';
 import 'package:animku/repository/detail_by_id.dart';
 import 'package:animku/repository/schedule_repo.dart';
@@ -22,7 +22,7 @@ import 'package:animku/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
 
 import 'bloc/seasonLaterBloc/season_later_bloc.dart';
@@ -30,8 +30,11 @@ import 'bloc/seasonLaterBloc/season_later_bloc.dart';
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-  .then((value) => runApp(MyApp()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) => runApp(
+      MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
