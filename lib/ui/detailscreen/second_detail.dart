@@ -156,33 +156,34 @@ class _SecondDetailState extends State<SecondDetail> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => YoutubeWebView(
-                        url: data.searchListDetail.trailerUrl,
+              if (data.searchListDetail?.trailerUrl != null)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YoutubeWebView(
+                          url: data.searchListDetail.trailerUrl,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: Card(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Container(
-                      width: 200.w as double,
-                      color: BaseColor.baseColor,
-                      child: Center(
-                        child: Icon(
-                          Icons.play_circle_filled,
-                          color: BaseColor.white,
+                    );
+                  },
+                  child: Card(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 200.w as double,
+                        color: BaseColor.baseColor,
+                        child: Center(
+                          child: Icon(
+                            Icons.play_circle_filled,
+                            color: BaseColor.white,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
             ],
           ),
         ),

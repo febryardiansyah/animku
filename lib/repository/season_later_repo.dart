@@ -10,6 +10,7 @@ abstract class SeasonLaterRepository {
 
 class SeasonLaterImplements implements SeasonLaterRepository {
   ApiService api = ApiService();
+
   @override
   Future<List<AnimeList>> fetchSeasonLater() async {
     final response =

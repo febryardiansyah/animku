@@ -2,22 +2,22 @@ import 'package:animku/models/current_season_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-abstract class CurrentBlocState extends Equatable{}
+abstract class CurrentBlocState extends Equatable {}
 
-class CurrentInitialState extends CurrentBlocState{
+class CurrentInitialState extends CurrentBlocState {
   @override
   // TODO: implement props
   List<Object> get props => [];
 }
 
-class CurrentLoadingState extends CurrentBlocState{
+class CurrentLoadingState extends CurrentBlocState {
   @override
   // TODO: implement props
   List<Object> get props => [];
 }
 
-class CurrentLoadedState extends CurrentBlocState{
-  final List<AnimeList>animeList;
+class CurrentLoadedState extends CurrentBlocState {
+  final List<AnimeList> animeList;
 
   CurrentLoadedState({@required this.animeList});
 
@@ -25,7 +25,7 @@ class CurrentLoadedState extends CurrentBlocState{
   List<Object> get props => [animeList];
 }
 
-class CurrentErrorState extends CurrentBlocState{
+class CurrentErrorState extends CurrentBlocState {
   final String message;
 
   CurrentErrorState({@required this.message});

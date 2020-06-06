@@ -18,6 +18,7 @@ class SaturdayBloc extends Bloc<ScheduleEvent, ScheduleState> {
       yield ScheduleInitialState();
       try {
         final List<AnimeList> list = await scheduleRepository.getSaturday();
+        print(list);
         yield ScheduleLoadedState(animeList: list);
       } catch (e) {
         yield ScheduleErrorState(message: e.toString());

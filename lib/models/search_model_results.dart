@@ -21,7 +21,7 @@ class Results {
 class SearchModelResult {
   String imageUrl, title, synopsis, startDate, endDate;
   int episodes, malId;
-  double score;
+  num score;
 
   SearchModelResult({
     this.imageUrl,
@@ -39,7 +39,7 @@ class SearchModelResult {
       malId: json['mal_id'] as int,
       title: json['title'] as String,
       imageUrl: json['image_url'] as String,
-      score: json['score'] as double,
+      score: json['score'] as num,
       synopsis: json['synopsis'] as String,
     );
   }

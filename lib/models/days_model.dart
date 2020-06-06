@@ -115,9 +115,7 @@ class FridayModel {
     return FridayModel(
       day: List<AnimeList>.from(
         json['friday'].map(
-          (item) => AnimeList.fromMap(
-            item as Map<String, dynamic>,
-          ),
+          (Map<String, dynamic> item) => AnimeList.fromMap(item),
         ) as Iterable<dynamic>,
       ),
     );
